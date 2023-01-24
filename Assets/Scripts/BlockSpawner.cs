@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// TODO BlockSpawner fires an event whenever grid is ready after a falling fill or an initial fill
 public class BlockSpawner : MonoBehaviour {
 	[SerializeField] int colorCount = 5;
 
@@ -27,7 +28,7 @@ public class BlockSpawner : MonoBehaviour {
 			for (int posY = firstCell.y; posY < lastCell.y; posY++) {
 				Vector3 position = blockGrid.cellToWorld(new Vector3Int(posX, posY, 0));
 				int sortingOrder = blockGrid.getSize().y + posY;
-				
+
 				spawnRandomBlock(position, sortingOrder);
 			}
 		}
@@ -41,4 +42,7 @@ public class BlockSpawner : MonoBehaviour {
 		spawnedBlock.setSortingOrder(sortingOrder);
 		spawnedBlock.gameObject.SetActive(true);
 	}
+
+	// Getters
+	public Block[] getBlocks() { return GetComponentsInChildren<Block>(); }
 }
