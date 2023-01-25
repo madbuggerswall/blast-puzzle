@@ -3,13 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class FillManager : MonoBehaviour {
+	// Shifting block count
+	[SerializeField] int shiftingBlocks;
+
 	void Start() {
 		Events.getInstance().matchBlasted.AddListener(fill);
 	}
 
-	// TODO: Break down this method. Also filling could be migrated to FillController or something.
 	void fill(BlockGroup blockGroup) {
 		BlockGrid blockGrid = LevelManager.getInstance().getBlockGrid();
+		Events.getInstance().filling.Invoke();
 
 		int minRow = blockGrid.getCellBounds().min.y;
 		int maxRow = blockGrid.getCellBounds().max.y;
@@ -37,6 +40,7 @@ public class FillManager : MonoBehaviour {
 		int layerMask = LayerMask.GetMask("Block");
 
 		BlockGrid blockGrid = LevelManager.getInstance().getBlockGrid();
+		BlockSpawner blockSpawner = LevelManager.getInstance().getBlockSpawner();
 
 		for (int row = minRow; row < maxRow; row++) {
 			Vector2 pointPos = blockGrid.cellToWorld(new Vector2Int(column, row));
@@ -44,8 +48,27 @@ public class FillManager : MonoBehaviour {
 
 			if (collider == null)
 				emptyCellCount++;
-			else if (emptyCellCount > 0)
+			else if (emptyCellCount > 0) {
 				collider.GetComponent<Block>().fill(emptyCellCount);
+				shiftingBlocks++;
+			}
+		}
+
+		// Falling blocks
+		const int fallingRow = 12;
+		for (int targetRow = emptyCellCount; targetRow > 0; targetRow--) {
+			Vector2 spawnPosition = blockGrid.cellToWorld(new Vector2Int(column, fallingRow-targetRow));
+			Block block = blockSpawner.spawnRandomBlock(spawnPosition);
+			block.fall(targetRow);
+			shiftingBlocks++;
+		}
+
+	}
+
+	public void decrementShiftingBlocks() {
+		shiftingBlocks--;
+		if (shiftingBlocks == 0) {
+			Events.getInstance().fillingDone.Invoke();
 		}
 	}
 }

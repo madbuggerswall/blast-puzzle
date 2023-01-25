@@ -2,8 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-// Bad practice only for testing
-[DefaultExecutionOrder(4)]
 public class MatchFinder : MonoBehaviour {
 	int layerMask;
 
@@ -13,12 +11,14 @@ public class MatchFinder : MonoBehaviour {
 
 	void Start() {
 		checkBlockGroups();
+		Events.getInstance().fillingDone.AddListener(checkBlockGroups);
+		Events.getInstance().filling.AddListener(clearBlockGroups);
 	}
 
 	// Check for matching blocks/matching groups
 	void checkBlockGroups() {
 		Block[] blocks = LevelManager.getInstance().getBlockSpawner().getBlocks();
-		
+
 		foreach (Block block in blocks) {
 			if (block.getBlockGroup() != null)
 				continue;
@@ -45,6 +45,12 @@ public class MatchFinder : MonoBehaviour {
 				checkBlockNeighbors(nieghbor, ref blockGroup);
 			}
 		}
+	}
 
+	void clearBlockGroups() {
+		Block[] blocks = LevelManager.getInstance().getBlockSpawner().getBlocks();
+
+		foreach (Block block in blocks)
+			block.setBlockGroup(null);
 	}
 }

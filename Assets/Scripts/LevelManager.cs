@@ -8,6 +8,7 @@ public class LevelManager : MonoBehaviour {
 
 	BlockGrid blockGrid;
 	BlockSpawner blockSpawner;
+	FillManager fillManager;
 
 	void Awake() {
 		// GameManager
@@ -18,6 +19,7 @@ public class LevelManager : MonoBehaviour {
 		// Find mediated objects
 		blockGrid = FindObjectOfType<BlockGrid>();
 		blockSpawner = FindObjectOfType<BlockSpawner>();
+		fillManager = FindObjectOfType<FillManager>();
 	}
 
 	// Singleton
@@ -27,4 +29,5 @@ public class LevelManager : MonoBehaviour {
 	// Getters
 	public BlockGrid getBlockGrid() { return blockGrid; }
 	public BlockSpawner getBlockSpawner() { return blockSpawner; }
+	public FillManager getFillManager() { return fillManager; }
 }

@@ -6,11 +6,15 @@ public class Events {
 	// Possibly UnityEvent<BlockGroup/Match>
 	public UnityEvent<BlockGroup> matchBlasted;
 
-	public UnityEvent noMovesLeft;
+	// Rename these, or gridReady(bool)
+	public UnityEvent filling;
+	public UnityEvent fillingDone;
 
 	Events() {
 		matchBlasted = new UnityEvent<BlockGroup>();
-		noMovesLeft = new UnityEvent();
+
+		filling = new UnityEvent();		
+		fillingDone = new UnityEvent();		
 	}
 
 	public static Events getInstance() {

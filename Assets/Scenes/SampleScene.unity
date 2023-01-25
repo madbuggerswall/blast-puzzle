@@ -1160,7 +1160,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
-  m_SortingOrder: -2
+  m_SortingOrder: -4
   m_TargetDisplay: 0
 --- !u!224 &1333657834
 RectTransform:
@@ -1379,7 +1379,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -2
   m_Sprite: {fileID: 21300000, guid: 8aae869b75ca14d7c938af7a6b6073c0, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -1786,6 +1786,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5f0037a493d94c5185e13d3bc08fcf9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  shiftingBlocks: 0
 --- !u!1 &2083022921
 GameObject:
   m_ObjectHideFlags: 0

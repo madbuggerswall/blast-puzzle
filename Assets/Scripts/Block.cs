@@ -26,19 +26,38 @@ public class Block : MonoBehaviour {
 		rigidBody = GetComponent<Rigidbody2D>();
 	}
 
-	void Start() {
+	// IPoolable.reset
+	void OnEnable() {
+		setBlockGroup(null);
 	}
 
 	void OnMouseDown() {
 		blockGroup?.blast();
 	}
 
-	public void fill(int rowCount) {
-		Vector2 target = transform.position + Vector3.down * rowCount;
+	public void fall(int rowCount) {
+		BlockGrid blockGrid = LevelManager.getInstance().getBlockGrid();
+
+		int maxRow = blockGrid.getCellBounds().max.y;
+		Vector2Int targetCell = blockGrid.worldToCell(new Vector2(transform.position.x, maxRow - rowCount));
+		Vector2 target = blockGrid.cellToWorld(targetCell);
+		int sortingOrder = blockGrid.getSize().y / 2 + maxRow - rowCount;
+		spriteRenderer.sortingOrder = sortingOrder;
+
 		StartCoroutine(moveTowardsTarget(target));
 	}
 
-	// For smooth shifting
+	public void fill(int rowCount) {
+		// Guaranteed snapping
+		BlockGrid blockGrid = LevelManager.getInstance().getBlockGrid();
+
+		Vector2Int targetCell = blockGrid.worldToCell(transform.position + Vector3.down * rowCount);
+		Vector2 target = blockGrid.cellToWorld(targetCell);
+		spriteRenderer.sortingOrder -= rowCount;
+
+		StartCoroutine(moveTowardsTarget(target));
+	}
+
 	IEnumerator moveTowardsTarget(Vector2 target) {
 		const float maxDelta = 12;
 
@@ -47,12 +66,13 @@ public class Block : MonoBehaviour {
 			rigidBody.MovePosition(towards);
 			yield return new WaitForFixedUpdate();
 		}
+
+		LevelManager.getInstance().getFillManager().decrementShiftingBlocks();
 	}
 
 
 	// To avoid undesired overlappings
 	public void setSortingOrder(int sortingOrder) {
-		spriteRenderer ??= GetComponent<SpriteRenderer>();
 		spriteRenderer.sortingOrder = sortingOrder;
 	}
 

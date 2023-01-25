@@ -20,28 +20,28 @@ public class BlockSpawner : MonoBehaviour {
 	// Fills BlockGrid with random colored blocks
 	void initializeGrid() {
 		BlockGrid blockGrid = LevelManager.getInstance().getBlockGrid();
-
 		(Vector2Int firstCell, Vector2Int lastCell) = blockGrid.getCellBounds();
 
 		for (int column = firstCell.x; column < lastCell.x; column++) {
 			for (int row = firstCell.y; row < lastCell.y; row++) {
 				Vector2 position = blockGrid.cellToWorld(new Vector2Int(column, row));
-				int sortingOrder = blockGrid.getSize().y + row;
+				int sortingOrder = blockGrid.getSize().y / 2 + row;
 
-				spawnRandomBlock(position, sortingOrder);
+				Block block = spawnRandomBlock(position);
+				block.setSortingOrder(sortingOrder);
 			}
 		}
 	}
 
 	// Spawn a random block at position
-	void spawnRandomBlock(Vector3 position, int sortingOrder) {
+	public Block spawnRandomBlock(Vector3 position) {
 		Block blockPrefab = Prefabs.getInstance().getBlock(Random.Range(0, colorCount));
 
 		Block spawnedBlock = objectPool.spawn(blockPrefab.gameObject, position).GetComponent<Block>();
-		spawnedBlock.setSortingOrder(sortingOrder);
 		spawnedBlock.gameObject.SetActive(true);
+		return spawnedBlock;
 	}
 
 	// Getters
-	public Block[] getBlocks() { return GetComponentsInChildren<Block>(); }
+	public Block[] getBlocks() { return GetComponentsInChildren<Block>(false); }
 }
