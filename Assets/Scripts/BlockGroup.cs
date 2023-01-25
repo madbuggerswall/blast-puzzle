@@ -12,6 +12,8 @@ public class BlockGroup {
 		foreach (Block block in blocks) {
 			block.gameObject.SetActive(false);
 		}
+		
+		Events.getInstance().matchBlasted.Invoke(this);
 	}
 
 	public void addBlock(Block block) {
@@ -21,7 +23,10 @@ public class BlockGroup {
 		// Retrieve these values from LevelManager or Board.
 		// groupIcons(Board.getInstance().getIconThresholds());
 	}
-	
+
 	public bool isEmpty() { return blocks.Count == 0; }
 	public bool contains(Block block) { return blocks.Contains(block); }
+
+	// Getters
+	public List<Block> getBlocks() { return blocks; }
 }

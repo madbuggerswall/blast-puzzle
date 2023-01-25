@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 // TODO BlockSpawner fires an event whenever grid is ready after a falling fill or an initial fill
+// TODO BlockSpawner is responisble for "fall" so it should be responsible for "fill"
 public class BlockSpawner : MonoBehaviour {
 	[SerializeField] int colorCount = 5;
 
@@ -13,21 +14,21 @@ public class BlockSpawner : MonoBehaviour {
 	}
 
 	void Start() {
-		fillGrid();
+		initializeGrid();
+
+		Events.getInstance().matchBlasted.AddListener(fill);
 	}
 
 	// Fills BlockGrid with random colored blocks
-	void fillGrid() {
+	void initializeGrid() {
 		BlockGrid blockGrid = LevelManager.getInstance().getBlockGrid();
 
-		Vector3 gridSize = new Vector3(blockGrid.getSize().x, blockGrid.getSize().y, 0f);
-		Vector3Int firstCell = blockGrid.worldToCell(blockGrid.transform.position - gridSize / 2);
-		Vector3Int lastCell = blockGrid.worldToCell(blockGrid.transform.position + gridSize / 2);
+		(Vector2Int firstCell, Vector2Int lastCell) = blockGrid.getCellBounds();
 
-		for (int posX = firstCell.x; posX < lastCell.x; posX++) {
-			for (int posY = firstCell.y; posY < lastCell.y; posY++) {
-				Vector3 position = blockGrid.cellToWorld(new Vector3Int(posX, posY, 0));
-				int sortingOrder = blockGrid.getSize().y + posY;
+		for (int column = firstCell.x; column < lastCell.x; column++) {
+			for (int row = firstCell.y; row < lastCell.y; row++) {
+				Vector2 position = blockGrid.cellToWorld(new Vector2Int(column, row));
+				int sortingOrder = blockGrid.getSize().y + row;
 
 				spawnRandomBlock(position, sortingOrder);
 			}
@@ -35,12 +36,42 @@ public class BlockSpawner : MonoBehaviour {
 	}
 
 	// Spawn a random block at position
-	public void spawnRandomBlock(Vector3 position, int sortingOrder) {
+	void spawnRandomBlock(Vector3 position, int sortingOrder) {
 		Block blockPrefab = Prefabs.getInstance().getBlock(Random.Range(0, colorCount));
 
 		Block spawnedBlock = objectPool.spawn(blockPrefab.gameObject, position).GetComponent<Block>();
 		spawnedBlock.setSortingOrder(sortingOrder);
 		spawnedBlock.gameObject.SetActive(true);
+	}
+
+	// TODO
+	void fill(BlockGroup blockGroup) {
+		int layerMask = LayerMask.GetMask("Block");
+
+		BlockGrid blockGrid = LevelManager.getInstance().getBlockGrid();
+		List<int> columnsAffected = new List<int>();
+
+		foreach (Block blastedBlock in blockGroup.getBlocks()) {
+			Vector2Int cellIndex = blockGrid.worldToCell(blastedBlock.transform.position);
+			if (!columnsAffected.Contains(cellIndex.x))
+				columnsAffected.Add(cellIndex.x);
+		}
+
+		int minRow = blockGrid.getCellBounds().min.y;
+		int maxRow = blockGrid.getCellBounds().max.y;
+
+		foreach (int column in columnsAffected) {
+			int emptyCellCount = 0;
+			for (int row = minRow; row < maxRow; row++) {
+				Vector2 pointPos = blockGrid.cellToWorld(new Vector2Int(column, row));
+				Collider2D collider = Physics2D.OverlapPoint(pointPos, layerMask);
+
+				if (collider == null)
+					emptyCellCount++;
+				else if (emptyCellCount > 0)
+					collider.GetComponent<Block>().fill(emptyCellCount);
+			}
+		}
 	}
 
 	// Getters

@@ -40,9 +40,14 @@ public class BlockGrid : MonoBehaviour {
 	}
 
 	// Grid 
-	public Vector3Int worldToCell(Vector3 position) { return grid.WorldToCell(position); }
-	public Vector3 cellToWorld(Vector3Int cellIndex) { return grid.GetCellCenterLocal(cellIndex); }
+	public Vector2Int worldToCell(Vector2 position) { return (Vector2Int) grid.WorldToCell(position); }
+	public Vector2 cellToWorld(Vector2Int cellIndex) { return grid.GetCellCenterLocal((Vector3Int) cellIndex); }
 
 	// Getters
 	public Vector2Int getSize() { return size; }
+	public (Vector2Int min, Vector2Int max) getCellBounds() {
+		Vector2Int firstCell = worldToCell((Vector2) transform.position - size / 2);
+		Vector2Int lastCell = worldToCell((Vector2) transform.position + size / 2);
+		return (firstCell, lastCell);
+	}
 }

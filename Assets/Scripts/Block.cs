@@ -17,19 +17,39 @@ public class Block : MonoBehaviour {
 	[SerializeField] BlockColor color;
 
 	BlockGroup blockGroup;
+
 	SpriteRenderer spriteRenderer;
+	Rigidbody2D rigidBody;
 
 	void Awake() {
 		spriteRenderer = GetComponent<SpriteRenderer>();
+		rigidBody = GetComponent<Rigidbody2D>();
+	}
+
+	void Start() {
 	}
 
 	void OnMouseDown() {
-		Debug.Log("Clicked on " + gameObject.name);
 		blockGroup?.blast();
 	}
 
-	void fall() {
+	public void fill(int rowCount) {
+		Debug.Log("Block.fill(" + rowCount + ")");
+		Vector2 target = transform.position + Vector3.down * rowCount;
+		StartCoroutine(moveTowardsTarget(target));
+	}
 
+	// For smooth shifting
+	IEnumerator moveTowardsTarget(Vector2 target) {
+		const float maxDelta = 12;
+
+		while (rigidBody.position != target) {
+			// Vector3.Lerp()
+			Vector3 towards = Vector3.MoveTowards(rigidBody.position, target, maxDelta * Time.deltaTime);
+
+			rigidBody.MovePosition(towards);
+			yield return new WaitForFixedUpdate();
+		}
 	}
 
 
