@@ -34,7 +34,6 @@ public class Block : MonoBehaviour {
 	}
 
 	public void fill(int rowCount) {
-		Debug.Log("Block.fill(" + rowCount + ")");
 		Vector2 target = transform.position + Vector3.down * rowCount;
 		StartCoroutine(moveTowardsTarget(target));
 	}
@@ -44,9 +43,7 @@ public class Block : MonoBehaviour {
 		const float maxDelta = 12;
 
 		while (rigidBody.position != target) {
-			// Vector3.Lerp()
 			Vector3 towards = Vector3.MoveTowards(rigidBody.position, target, maxDelta * Time.deltaTime);
-
 			rigidBody.MovePosition(towards);
 			yield return new WaitForFixedUpdate();
 		}
