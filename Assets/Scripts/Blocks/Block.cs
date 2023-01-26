@@ -5,6 +5,8 @@ using UnityEngine;
 // Make Block abstract, and colored blocks Colored Block or MatchBlock : Block
 // Duck and Balloon would be inheriting from Block in that way
 // All movement related
+
+[RequireComponent(typeof(Rigidbody2D), typeof(BoxCollider2D))]
 public abstract class Block : MonoBehaviour {
 	SpriteRenderer spriteRenderer;
 	Rigidbody2D rigidBody;
