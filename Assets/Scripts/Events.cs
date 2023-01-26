@@ -3,7 +3,7 @@ using UnityEngine.Events;
 public class Events {
 	static Events instance;
 
-	// Possibly UnityEvent<BlockGroup/Match>
+	// Possibly UnityEvent<BlockGroup/BlockGroup>
 	public UnityEvent<BlockGroup> matchBlasted;
 
 	// Rename these, or gridReady(bool)

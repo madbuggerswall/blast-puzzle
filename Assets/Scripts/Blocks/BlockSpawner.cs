@@ -43,5 +43,5 @@ public class BlockSpawner : MonoBehaviour {
 	}
 
 	// Getters
-	public Block[] getBlocks() { return GetComponentsInChildren<Block>(false); }
+	public ColorBlock[] getColorBlocks() { return GetComponentsInChildren<ColorBlock>(false); }
 }

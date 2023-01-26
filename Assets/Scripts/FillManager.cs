@@ -26,7 +26,7 @@ public class FillManager : MonoBehaviour {
 		BlockGrid blockGrid = LevelManager.getInstance().getBlockGrid();
 		List<int> affectedColumns = new List<int>();
 
-		foreach (Block blastedBlock in blockGroup.getBlocks()) {
+		foreach (Block blastedBlock in blockGroup.getColorBlocks()) {
 			Vector2Int cellIndex = blockGrid.worldToCell(blastedBlock.transform.position);
 			if (!affectedColumns.Contains(cellIndex.x))
 				affectedColumns.Add(cellIndex.x);
@@ -57,7 +57,7 @@ public class FillManager : MonoBehaviour {
 		// Falling blocks
 		const int fallingRow = 12;
 		for (int targetRow = emptyCellCount; targetRow > 0; targetRow--) {
-			Vector2 spawnPosition = blockGrid.cellToWorld(new Vector2Int(column, fallingRow-targetRow));
+			Vector2 spawnPosition = blockGrid.cellToWorld(new Vector2Int(column, fallingRow - targetRow));
 			Block block = blockSpawner.spawnRandomBlock(spawnPosition);
 			block.fall(targetRow);
 			shiftingBlocks++;

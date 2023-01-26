@@ -20,21 +20,21 @@ public class Particles : MonoBehaviour {
 	}
 
 	void blastParticles(BlockGroup blockGroup) {
-		foreach (Block block in blockGroup.getBlocks()) {
-			spawnParticlesAtBlock(block);
+		foreach (ColorBlock colorBlock in blockGroup.getColorBlocks()) {
+			spawnParticlesAtBlock(colorBlock);
 		}
 	}
 
 	// TODO
-	void spawnParticlesAtBlock(Block block) {
+	void spawnParticlesAtBlock(ColorBlock colorBlock) {
 		GameObject particlesPrefab = Prefabs.getInstance().getBlockParticles();
-		GameObject spawnedParticles = objectPool.spawn(particlesPrefab, block.transform.position);
+		GameObject spawnedParticles = objectPool.spawn(particlesPrefab, colorBlock.transform.position);
 		ParticleSystem.MainModule mainModule = spawnedParticles.GetComponent<ParticleSystem>().main;
-		mainModule.startColor = getColor(block);
+		mainModule.startColor = getColor(colorBlock);
 	}
 
-	Color getColor(Block block) {
-		switch (block.getColor()) {
+	Color getColor(ColorBlock colorBlock) {
+		switch (colorBlock.getColor()) {
 			case BlockColor.blue:
 				return blue;
 			case BlockColor.green:

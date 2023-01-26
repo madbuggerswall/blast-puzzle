@@ -1,32 +1,32 @@
 using System.Collections.Generic;
 
-// Rename this class to Match
+// Rename this class to Match/ColorMatch/ColorGroup
 public class BlockGroup {
-	List<Block> blocks;
+	List<ColorBlock> colorBlocks;
 
 	public BlockGroup() {
-		blocks = new List<Block>();
+		colorBlocks = new List<ColorBlock>();
 	}
 
 	public void blast() {
-		foreach (Block block in blocks) {
+		foreach (ColorBlock block in colorBlocks) {
 			block.gameObject.SetActive(false);
 		}
-		
+
 		Events.getInstance().matchBlasted.Invoke(this);
 	}
 
-	public void addBlock(Block block) {
-		blocks.Add(block);
+	public void addBlock(ColorBlock block) {
+		colorBlocks.Add(block);
 		block.setBlockGroup(this);
 
 		// Retrieve these values from LevelManager or Board.
 		// groupIcons(Board.getInstance().getIconThresholds());
 	}
 
-	public bool isEmpty() { return blocks.Count == 0; }
-	public bool contains(Block block) { return blocks.Contains(block); }
+	public bool isEmpty() { return colorBlocks.Count == 0; }
+	public bool contains(ColorBlock block) { return colorBlocks.Contains(block); }
 
 	// Getters
-	public List<Block> getBlocks() { return blocks; }
+	public List<ColorBlock> getColorBlocks() { return colorBlocks; }
 }
