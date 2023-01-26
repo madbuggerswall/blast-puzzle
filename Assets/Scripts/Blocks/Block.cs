@@ -5,7 +5,6 @@ using UnityEngine;
 public enum BlockColor {
 	blue,
 	green,
-	pink,
 	purple,
 	red,
 	yellow

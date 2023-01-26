@@ -9,6 +9,7 @@ public class LevelManager : MonoBehaviour {
 	BlockGrid blockGrid;
 	BlockSpawner blockSpawner;
 	FillManager fillManager;
+	Particles particles;
 
 	void Awake() {
 		// GameManager
@@ -20,6 +21,7 @@ public class LevelManager : MonoBehaviour {
 		blockGrid = FindObjectOfType<BlockGrid>();
 		blockSpawner = FindObjectOfType<BlockSpawner>();
 		fillManager = FindObjectOfType<FillManager>();
+		particles = FindObjectOfType<Particles>();
 	}
 
 	// Singleton

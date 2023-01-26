@@ -6,11 +6,16 @@ using UnityEngine;
 public class Prefabs : MonoBehaviour {
 	static Prefabs instance;
 
+	[Header("Blocks")]
 	[SerializeField] Block blueBlock;
 	[SerializeField] Block greenBlock;
 	[SerializeField] Block purpleBlock;
 	[SerializeField] Block redBlock;
 	[SerializeField] Block yellowBlock;
+
+	[Header("Particles")]
+	[SerializeField] GameObject blockParticles;
+
 
 	void Awake() {
 		assertSingleton();
@@ -36,6 +41,8 @@ public class Prefabs : MonoBehaviour {
 	public Block getBlock(int blockColor) {
 		return getBlock((BlockColor) blockColor);
 	}
+
+	public GameObject getBlockParticles() { return blockParticles; }
 
 	// Singleton
 	public static Prefabs getInstance() { return instance; }
