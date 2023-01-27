@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 // Rename this to GoalAnimationUI/GoalBlockAnimationUI
 public class GoalEffectUI : MonoBehaviour {
+	[SerializeField] GameObject spritePrefab;
 	ObjectPool objectPool;
 
 	void Awake() {
@@ -12,20 +13,21 @@ public class GoalEffectUI : MonoBehaviour {
 	}
 
 	public void flyToGoal(ColorBlock colorBlock) {
-		GameObject spawnedSprite = objectPool.spawn(Prefabs.getInstance().getBlockSprite(), colorBlock.transform.position);
+		GameObject blockSprite = objectPool.spawn(spritePrefab, colorBlock.transform.position);
 		Sprite goalSprite = colorBlock.GetComponent<SpriteRenderer>().sprite;
-		spawnedSprite.GetComponent<SpriteRenderer>().sprite = goalSprite;
+		blockSprite.GetComponent<SpriteRenderer>().sprite = goalSprite;
 
-		StartCoroutine(moveTowards(spawnedSprite, getTarget(goalSprite)));
+		StartCoroutine(moveTowards(blockSprite, getTarget(goalSprite)));
 	}
 
-	IEnumerator moveTowards(GameObject spawnedSprite, Vector2 target) {
+	IEnumerator moveTowards(GameObject sprite, Vector2 target) {
 		const float maxDelta = 12;
-		while ((Vector2) spawnedSprite.transform.position != target) {
-			spawnedSprite.transform.position = Vector3.MoveTowards(spawnedSprite.transform.position, target, maxDelta * Time.deltaTime);
-			yield return new WaitForEndOfFrame();
+		while ((Vector2) sprite.transform.position != target) {
+			sprite.transform.position = Vector3.MoveTowards(sprite.transform.position, target, maxDelta * Time.deltaTime);
+			yield return null;
 		}
-		spawnedSprite.gameObject.SetActive(false);
+
+		sprite.SetActive(false);
 	}
 
 	Vector2 getTarget(Sprite goalSprite) {

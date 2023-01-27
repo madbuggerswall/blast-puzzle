@@ -26,6 +26,7 @@ public class GoalManager : MonoBehaviour {
 		Events.getInstance().matchBlasted.AddListener(checkForGoals);
 	}
 
+	// Rename this 
 	void checkForGoals(BlockGroup blockGroup) {
 		foreach (Goal goal in goals) {
 			// Gateway for color block goals
