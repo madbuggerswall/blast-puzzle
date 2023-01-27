@@ -42,7 +42,7 @@ public class GoalManager : MonoBehaviour {
 					break;
 
 				goal.decrementAmount();
-				// Move towards to goal icon.
+				FindObjectOfType<GoalEffectUI>().flyToGoal(colorBlock);
 			}
 		}
 	}

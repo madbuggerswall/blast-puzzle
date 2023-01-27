@@ -17,4 +17,6 @@ public class GoalEntryPanelUI : MonoBehaviour {
 		blockImage.sprite = goal.getBlock().GetComponent<SpriteRenderer>().sprite;
 		amountText.text = goal.getAmount().ToString();
 	}
+
+	public Sprite getSprite() { return blockImage.sprite; }
 }
