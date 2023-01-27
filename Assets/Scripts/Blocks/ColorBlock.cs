@@ -22,7 +22,6 @@ public class ColorBlock : Block {
 		blockGroup?.blast();
 	}
 
-
 	// Getters & Setters
 	public BlockColor getColor() { return color; }
 	public BlockGroup getBlockGroup() { return blockGroup; }

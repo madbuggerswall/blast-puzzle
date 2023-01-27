@@ -813,6 +813,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4bbc17afde1a04509acb442a6d3b261f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  goal:
+    goalEntries:
+    - amount: 24
+      block: {fileID: 26094812}
+    - amount: 12
+      block: {fileID: 1927980071}
+  movesLeft: 0
 --- !u!4 &699235886
 Transform:
   m_ObjectHideFlags: 0
@@ -1071,7 +1078,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!212 &1161172926
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -6862,7 +6869,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!212 &1927980069
 SpriteRenderer:
   m_ObjectHideFlags: 0

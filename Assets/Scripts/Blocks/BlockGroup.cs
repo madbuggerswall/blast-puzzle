@@ -19,9 +19,6 @@ public class BlockGroup {
 	public void addBlock(ColorBlock block) {
 		colorBlocks.Add(block);
 		block.setBlockGroup(this);
-
-		// Retrieve these values from LevelManager or Board.
-		// groupIcons(Board.getInstance().getIconThresholds());
 	}
 
 	public bool isEmpty() { return colorBlocks.Count == 0; }
