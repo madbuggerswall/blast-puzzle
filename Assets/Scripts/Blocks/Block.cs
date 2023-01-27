@@ -5,6 +5,7 @@ using UnityEngine;
 // Make Block abstract, and colored blocks Colored Block or MatchBlock : Block
 // Duck and Balloon would be inheriting from Block in that way
 // All movement related
+// Fake the goal movement
 
 [RequireComponent(typeof(Rigidbody2D), typeof(BoxCollider2D))]
 public abstract class Block : MonoBehaviour {
@@ -16,6 +17,7 @@ public abstract class Block : MonoBehaviour {
 		rigidBody = GetComponent<Rigidbody2D>();
 	}
 
+	// Fall from top of the screen
 	public void fall(int rowCount) {
 		BlockGrid blockGrid = LevelManager.getInstance().getBlockGrid();
 
@@ -28,6 +30,7 @@ public abstract class Block : MonoBehaviour {
 		StartCoroutine(moveTowardsTarget(target));
 	}
 
+	// Fill empty spaces below
 	public void fill(int rowCount) {
 		// Guaranteed snapping
 		BlockGrid blockGrid = LevelManager.getInstance().getBlockGrid();

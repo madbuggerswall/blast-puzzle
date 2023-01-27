@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 
 // Because Editor can't serialize (int , Block)
-
 [System.Serializable]
 public class Goal {
 	[SerializeField] int amount;
@@ -48,18 +47,7 @@ public class GoalManager : MonoBehaviour {
 		}
 	}
 
-	// void checkForGoals(BlockGroup blockGroup) {
-	// 	foreach (ColorBlock colorBlock in blockGroup.getColorBlocks()) {
-	// 		Debug.Log(colorBlock.GetType() + "|" + colorBlock.getColor());
-	// 		foreach (GoalEntry goalEntry in goal.getGoalEntries()) {
-	// 			bool colorsMatch = ((ColorBlock) goalEntry.getBlock())?.getColor() == colorBlock.getColor();
-	// 			if (colorsMatch && goalEntry.getAmount() > 0) {
-	// 				goalEntry.decrementAmount();
-	// 				Debug.Log("Amount: " + goalEntry.getAmount());
-	// 			}
-	// 		}
-	// 	}
-	// }
-
 	// void checkForGoals(Block block) { }
+
+	public List<Goal> getGoals() { return goals; }
 }
