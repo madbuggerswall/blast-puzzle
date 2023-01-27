@@ -5,7 +5,7 @@ using UnityEngine;
 // Because Editor can't serialize (int , Block)
 
 [System.Serializable]
-public class GoalEntry {
+public class Goal {
 	[SerializeField] int amount;
 	[SerializeField] Block block;
 
@@ -14,28 +14,11 @@ public class GoalEntry {
 	public Block getBlock() { return block; }
 }
 
-[System.Serializable]
-public class Goal {
-	[SerializeField] List<GoalEntry> goalEntries;
-	[SerializeField] int movesLeft;
-
-
-	public Goal() {
-		goalEntries = new List<GoalEntry>();
-	}
-
-	public void setGoals(params GoalEntry[] entries) {
-		foreach (GoalEntry goalEntry in entries) {
-			this.goalEntries.Add(goalEntry);
-		}
-	}
-
-	public List<GoalEntry> getGoalEntries() { return goalEntries; }
-}
-
 public class GoalManager : MonoBehaviour {
 	// Maybe a list of goals instead of this, would ditch GoalEntry class that way
-	[SerializeField] Goal goal;
+	[SerializeField] List<Goal> goals;
+	[SerializeField] int movesLeft;
+
 
 	void Awake() {
 	}
@@ -45,17 +28,38 @@ public class GoalManager : MonoBehaviour {
 	}
 
 	void checkForGoals(BlockGroup blockGroup) {
-		foreach (ColorBlock colorBlock in blockGroup.getColorBlocks()) {
-			Debug.Log(colorBlock.GetType() + "|" + colorBlock.getColor());
-			foreach (GoalEntry goalEntry in goal.getGoalEntries()) {
-				bool colorsMatch = ((ColorBlock) goalEntry.getBlock())?.getColor() == colorBlock.getColor();
-				if (colorsMatch && goalEntry.getAmount() > 0) {
-					goalEntry.decrementAmount();
-					Debug.Log("Amount: " + goalEntry.getAmount());
-				}
+		foreach (Goal goal in goals) {
+			// Gateway for color block goals
+			ColorBlock goalBlock = goal.getBlock() as ColorBlock;
+			if (goalBlock == null)
+				continue;
+
+			foreach (ColorBlock colorBlock in blockGroup.getColorBlocks()) {
+				// Gateway for wrong colors and completed goals
+				bool colorsMatch = colorBlock.getColor() == goalBlock.getColor();
+				bool goalCompleted = goal.getAmount() == 0;
+
+				if (!colorsMatch || goalCompleted)
+					break;
+
+				goal.decrementAmount();
+				// Move towards to goal icon.
 			}
 		}
 	}
+
+	// void checkForGoals(BlockGroup blockGroup) {
+	// 	foreach (ColorBlock colorBlock in blockGroup.getColorBlocks()) {
+	// 		Debug.Log(colorBlock.GetType() + "|" + colorBlock.getColor());
+	// 		foreach (GoalEntry goalEntry in goal.getGoalEntries()) {
+	// 			bool colorsMatch = ((ColorBlock) goalEntry.getBlock())?.getColor() == colorBlock.getColor();
+	// 			if (colorsMatch && goalEntry.getAmount() > 0) {
+	// 				goalEntry.decrementAmount();
+	// 				Debug.Log("Amount: " + goalEntry.getAmount());
+	// 			}
+	// 		}
+	// 	}
+	// }
 
 	// void checkForGoals(Block block) { }
 }
