@@ -35,19 +35,20 @@ public class BlockSpawner : MonoBehaviour {
 
 	// Spawn a random block at position
 	public Block spawnRandomBlock(Vector3 position) {
-		
-		Block blockPrefab;
-		float randomValue = Random.value;
-		if (randomValue < .8f)
-			blockPrefab = Prefabs.getInstance().getBlock(Random.Range(0, colorCount));
-		else if (randomValue < .9f)
-			blockPrefab = Prefabs.getInstance().getDuck();
-		else
-			blockPrefab = Prefabs.getInstance().getBalloon();
-
-		Block spawnedBlock = objectPool.spawn(blockPrefab.gameObject, position).GetComponent<Block>();
+		Block spawnedBlock = objectPool.spawn(getRandomBlockPrefab().gameObject, position).GetComponent<Block>();
 		spawnedBlock.gameObject.SetActive(true);
 		return spawnedBlock;
+	}
+
+	// 80% Colored 10% Duck 10% Balloon
+	Block getRandomBlockPrefab() {
+		float randomValue = Random.value;
+		if (randomValue < .8f)
+			return Prefabs.getInstance().getBlock(Random.Range(0, colorCount));
+		else if (randomValue < .9f)
+			return Prefabs.getInstance().getDuck();
+		else
+			return Prefabs.getInstance().getBalloon();
 	}
 
 	// Getters
