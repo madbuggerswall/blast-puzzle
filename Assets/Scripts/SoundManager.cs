@@ -15,20 +15,10 @@ public class SoundManager : MonoBehaviour {
 	}
 
 	void Start() {
-		Events.getInstance().matchBlasted.AddListener(delegate (BlockGroup blockGroup) {
-			playAudioClip(cubeExplode);
-		});
-
-		Events.getInstance().blockHitGoal.AddListener(delegate (GoalEntryPanelUI goalPanel) {
-			playAudioClip(cubeCollect);
-		});
-
-		Events.getInstance().blockBlasted.AddListener(delegate (Block block) {
-			if (block.GetType() == typeof(Duck))
-				playAudioClip(duck);
-			else if (block.GetType() == typeof(Balloon))
-				playAudioClip(balloon);
-		});
+		Events.getInstance().matchBlasted.AddListener(delegate { playAudioClip(cubeExplode); });
+		Events.getInstance().blockHitGoal.AddListener(delegate { playAudioClip(cubeCollect); });
+		Events.getInstance().duckBlasted.AddListener(delegate { playAudioClip(duck); });
+		Events.getInstance().balloonBlasted.AddListener(delegate { playAudioClip(balloon); });
 	}
 
 	void playAudioClip(AudioClip audioClip) {

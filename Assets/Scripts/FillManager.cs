@@ -8,7 +8,7 @@ public class FillManager : MonoBehaviour {
 
 	void Start() {
 		Events.getInstance().matchBlasted.AddListener(fill);
-		Events.getInstance().blockBlasted.AddListener(fill);
+		Events.getInstance().duckBlasted.AddListener(fill);
 	}
 
 	void fill(Block block) {
@@ -26,7 +26,7 @@ public class FillManager : MonoBehaviour {
 	List<int> getAffectedColumns(BlockGroup blockGroup) {
 		List<int> affectedColumns = new List<int>();
 
-		foreach (Block block in blockGroup.getColorBlocks()) {
+		foreach (Block block in blockGroup.getAllBlocks()) {
 			int affectedColumn = getAffectedColumn(block);
 			if (!affectedColumns.Contains(affectedColumn))
 				affectedColumns.Add(affectedColumn);
@@ -40,16 +40,21 @@ public class FillManager : MonoBehaviour {
 	}
 
 	void fillColumn(int column) {
-		BlockGrid blockGrid = LevelManager.getInstance().getBlockGrid();
-		BlockSpawner blockSpawner = LevelManager.getInstance().getBlockSpawner();
+		int emptyCellCount;
 
-		int emptyCellCount = 0;
+		fillEmptyCells(column, out emptyCellCount);
+		dropBlocks(column, emptyCellCount);
+	}
+
+	// Shifts blocks to fill blasted cells
+	void fillEmptyCells(int column, out int emptyCellCount) {
 		int layerMask = LayerMask.GetMask("Block");
+		BlockGrid blockGrid = LevelManager.getInstance().getBlockGrid();
 
-		int minRow = blockGrid.getCellBounds().min.y;
-		int maxRow = blockGrid.getCellBounds().max.y;
+		emptyCellCount = 0;
+		(Vector2Int min, Vector2Int max) = blockGrid.getCellBounds();
 
-		for (int row = minRow; row < maxRow; row++) {
+		for (int row = min.y; row < max.y; row++) {
 			Vector2 pointPos = blockGrid.cellToWorld(new Vector2Int(column, row));
 			Collider2D collider = Physics2D.OverlapPoint(pointPos, layerMask);
 
@@ -60,16 +65,20 @@ public class FillManager : MonoBehaviour {
 				shiftingBlocks++;
 			}
 		}
+	}
 
-		// Falling blocks
+	// Drop falling blocks to fill empty spaces on the top
+	void dropBlocks(int column, int emptyCellCount) {
 		const int fallingRow = 12;
+		BlockGrid blockGrid = LevelManager.getInstance().getBlockGrid();
+		BlockSpawner blockSpawner = LevelManager.getInstance().getBlockSpawner();
+
 		for (int targetRow = emptyCellCount; targetRow > 0; targetRow--) {
 			Vector2 spawnPosition = blockGrid.cellToWorld(new Vector2Int(column, fallingRow - targetRow));
 			Block block = blockSpawner.spawnRandomBlock(spawnPosition);
 			block.fall(targetRow);
 			shiftingBlocks++;
 		}
-
 	}
 
 	public void decrementShiftingBlocks() {

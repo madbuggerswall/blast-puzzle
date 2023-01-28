@@ -37,21 +37,27 @@ public class MatchFinder : MonoBehaviour {
 		foreach (Vector2 direction in directions) {
 			// Multiply direction with grid size for correctness.
 			Collider2D collider = Physics2D.OverlapPoint((Vector2) colorBlock.transform.position + direction, layerMask);
-			ColorBlock nieghbor = collider?.GetComponent<ColorBlock>();
 
-			if (colorBlock.getColor() == nieghbor?.getColor() && !blockGroup.contains(nieghbor)) {
-				if (blockGroup.isEmpty())
-					blockGroup.addBlock(colorBlock);
+			if (collider?.GetComponent<Block>() is Balloon) {
+				Balloon neighbor = collider?.GetComponent<Balloon>();
+				if (!blockGroup.contains(neighbor))
+					blockGroup.addBlock(neighbor);
+			} else if (collider?.GetComponent<Block>() is ColorBlock) {
+				ColorBlock neighbor = collider?.GetComponent<ColorBlock>();
+				if (colorBlock.getColor() == neighbor?.getColor() && !blockGroup.contains(neighbor)) {
+					if (blockGroup.isEmpty())
+						blockGroup.addBlock(colorBlock);
 
-				blockGroup.addBlock(nieghbor);
-				checkBlockNeighbors(nieghbor, ref blockGroup);
+					blockGroup.addBlock(neighbor);
+					checkBlockNeighbors(neighbor, ref blockGroup);
+				}
 			}
 		}
 	}
 
 	void clearBlockGroups() {
 		matchCount = 0;
-		
+
 		ColorBlock[] colorBlocks = LevelManager.getInstance().getBlockSpawner().getColorBlocks();
 		foreach (ColorBlock colorBlock in colorBlocks)
 			colorBlock.setBlockGroup(null);
