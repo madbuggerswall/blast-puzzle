@@ -5,6 +5,6 @@ using UnityEngine;
 public class Balloon : Block {
 	public override void blast() {
 		gameObject.SetActive(false);
-		Events.getInstance().balloonBlasted.Invoke(this);
+		Events.getInstance().blockBlasted.Invoke(this);
 	}
 }

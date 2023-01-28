@@ -5,8 +5,7 @@ public class Events {
 
 	// Blast
 	public UnityEvent<BlockGroup> matchBlasted;
-	public UnityEvent<Duck> duckBlasted;
-	public UnityEvent<Balloon> balloonBlasted;
+	public UnityEvent<Block> blockBlasted;
 
 	// Goal
 	public UnityEvent<BlockGroup, Goal> goalMatch;
@@ -20,8 +19,7 @@ public class Events {
 	Events() {
 		// Blast
 		matchBlasted = new UnityEvent<BlockGroup>();
-		duckBlasted = new UnityEvent<Duck>();
-		balloonBlasted = new UnityEvent<Balloon>();
+		blockBlasted = new UnityEvent<Block>();
 
 		// Goal
 		goalMatch = new UnityEvent<BlockGroup, Goal>();

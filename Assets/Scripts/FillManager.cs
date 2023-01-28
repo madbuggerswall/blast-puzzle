@@ -8,10 +8,14 @@ public class FillManager : MonoBehaviour {
 
 	void Start() {
 		Events.getInstance().matchBlasted.AddListener(fill);
-		Events.getInstance().duckBlasted.AddListener(fill);
+		Events.getInstance().blockBlasted.AddListener(fill);
 	}
 
 	void fill(Block block) {
+		// Should be if(block is BlastAffected)
+		if (block is not Duck)
+			return;
+		
 		Events.getInstance().filling.Invoke();
 		fillColumn(getAffectedColumn(block));
 	}

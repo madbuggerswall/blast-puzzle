@@ -9,7 +9,7 @@ public class Duck : Block {
 
 	public override void blast() {
 		gameObject.SetActive(false);
-		Events.getInstance().duckBlasted.Invoke(this);
+		Events.getInstance().blockBlasted.Invoke(this);
 	}
 
 	void blastAtBottom() {

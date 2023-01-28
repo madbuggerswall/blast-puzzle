@@ -11,12 +11,18 @@ public class SoundManager : MonoBehaviour {
 	void Start() {
 		Events.getInstance().matchBlasted.AddListener(delegate { playAudioSource(cubeExplode); });
 		Events.getInstance().blockHitGoal.AddListener(delegate { playAudioSource(cubeCollect); });
-		Events.getInstance().duckBlasted.AddListener(delegate { playAudioSource(duck); });
-		Events.getInstance().balloonBlasted.AddListener(delegate { playAudioSource(balloon); });
+		Events.getInstance().blockBlasted.AddListener(playBlockSound);
 	}
 
 	void playAudioSource(AudioSource audioSource) {
 		audioSource.pitch = Random.Range(0.96f, 1.04f);
 		audioSource.Play();
+	}
+
+	void playBlockSound(Block block) {
+		if (block is Duck)
+			playAudioSource(duck);
+		else if (block is Balloon)
+			playAudioSource(balloon);
 	}
 }
