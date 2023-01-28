@@ -25,22 +25,19 @@ public class GoalManager : MonoBehaviour {
 	[SerializeField] List<Goal> goals;
 	[SerializeField] int movesLeft;
 
-
-	void Awake() {
-	}
-
 	void Start() {
 		Events.getInstance().matchBlasted.AddListener(checkForGoals);
+		Events.getInstance().blockBlasted.AddListener(checkForGoals);
 	}
 
 	// Rename this 
 	void checkForGoals(BlockGroup blockGroup) {
 		foreach (Goal goal in goals) {
 			// Gateway for color block goals
-			ColorBlock goalBlock = goal.getBlock() as ColorBlock;
-			if (goalBlock == null)
+			if (goal.getBlock() is not ColorBlock)
 				continue;
 
+			ColorBlock goalBlock = goal.getBlock() as ColorBlock;
 			bool colorsMatch = blockGroup.getColorBlocks()[0].getColor() == goalBlock.getColor();
 			bool goalCompleted = goal.getAmount() <= 0;
 
@@ -51,7 +48,19 @@ public class GoalManager : MonoBehaviour {
 		}
 	}
 
-	// void checkForGoals(Block block) { }
+	// TODO Goals should work with Duck and Balloon blocks
+	void checkForGoals(Block block) {
+		foreach (Goal goal in goals) {
+			if (goal.getBlock().GetType() != block.GetType())
+				continue;
+
+			bool goalCompleted = goal.getAmount() <= 0;
+			if (!goalCompleted) {
+				goal.decrementAmount(1);
+				Events.getInstance().goalBlock.Invoke(block, goal);
+			}
+		}
+	}
 
 	public List<Goal> getGoals() { return goals; }
 }

@@ -14,17 +14,18 @@ public class GoalEffectUI : MonoBehaviour {
 
 	void Start() {
 		Events.getInstance().goalMatch.AddListener(moveMatchTowardsGoalIcon);
+		Events.getInstance().goalBlock.AddListener(moveBlockTowardsGoalIcon);
 	}
 
 	void moveMatchTowardsGoalIcon(BlockGroup blockGroup, Goal goal) {
 		foreach (ColorBlock colorBlock in blockGroup.getColorBlocks()) {
-			moveSpriteTowardsGoalIcon(colorBlock, goal);
+			moveBlockTowardsGoalIcon(colorBlock, goal);
 		}
 	}
 
-	void moveSpriteTowardsGoalIcon(ColorBlock colorBlock, Goal goal) {
-		GameObject blockSprite = objectPool.spawn(spritePrefab, colorBlock.transform.position);
-		Sprite goalIcon = colorBlock.GetComponent<SpriteRenderer>().sprite;
+	void moveBlockTowardsGoalIcon(Block block, Goal goal) {
+		GameObject blockSprite = objectPool.spawn(spritePrefab, block.transform.position);
+		Sprite goalIcon = block.GetComponent<SpriteRenderer>().sprite;
 		blockSprite.GetComponent<SpriteRenderer>().sprite = goalIcon;
 
 		StartCoroutine(moveSpriteTowards(blockSprite, goal));
@@ -40,7 +41,6 @@ public class GoalEffectUI : MonoBehaviour {
 			yield return null;
 		}
 
-		// Goal amount decremented here for visual correctness
 		goalPanel.updateAmount(goal);
 		sprite.SetActive(false);
 		Events.getInstance().blockHitGoal.Invoke(goalPanel);

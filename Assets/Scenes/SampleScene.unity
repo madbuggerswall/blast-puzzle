@@ -1352,6 +1352,10 @@ MonoBehaviour:
     block: {fileID: 26094812}
   - amount: 36
     block: {fileID: 1281326837}
+  - amount: 12
+    block: {fileID: 1161172928}
+  - amount: 12
+    block: {fileID: 1927980071}
   movesLeft: -1
 --- !u!4 &699235886
 Transform:
