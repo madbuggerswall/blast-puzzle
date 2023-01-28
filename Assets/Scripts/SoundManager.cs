@@ -3,27 +3,20 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class SoundManager : MonoBehaviour {
-	[SerializeField] AudioClip cubeExplode;
-	[SerializeField] AudioClip cubeCollect;
-	[SerializeField] AudioClip duck;
-	[SerializeField] AudioClip balloon;
-
-	AudioSource audioSource;
-
-	void Awake() {
-		audioSource = GetComponent<AudioSource>();
-	}
+	[SerializeField] AudioSource cubeExplode;
+	[SerializeField] AudioSource cubeCollect;
+	[SerializeField] AudioSource duck;
+	[SerializeField] AudioSource balloon;
 
 	void Start() {
-		Events.getInstance().matchBlasted.AddListener(delegate { playAudioClip(cubeExplode); });
-		Events.getInstance().blockHitGoal.AddListener(delegate { playAudioClip(cubeCollect); });
-		Events.getInstance().duckBlasted.AddListener(delegate { playAudioClip(duck); });
-		Events.getInstance().balloonBlasted.AddListener(delegate { playAudioClip(balloon); });
+		Events.getInstance().matchBlasted.AddListener(delegate { playAudioSource(cubeExplode); });
+		Events.getInstance().blockHitGoal.AddListener(delegate { playAudioSource(cubeCollect); });
+		Events.getInstance().duckBlasted.AddListener(delegate { playAudioSource(duck); });
+		Events.getInstance().balloonBlasted.AddListener(delegate { playAudioSource(balloon); });
 	}
 
-	void playAudioClip(AudioClip audioClip) {
+	void playAudioSource(AudioSource audioSource) {
 		audioSource.pitch = Random.Range(0.96f, 1.04f);
-		audioSource.clip = audioClip;
 		audioSource.Play();
 	}
 }

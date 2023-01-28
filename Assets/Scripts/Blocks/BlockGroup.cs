@@ -20,7 +20,7 @@ public class BlockGroup {
 		foreach (Block block in blastAffectedBlocks) {
 			block.blast();
 		}
-
+		
 		Events.getInstance().matchBlasted.Invoke(this);
 	}
 
