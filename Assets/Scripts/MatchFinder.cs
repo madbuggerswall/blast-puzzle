@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class MatchFinder : MonoBehaviour {
+	[SerializeField] int matchCount;
 	int layerMask;
 
 	void Awake() {
@@ -25,6 +26,7 @@ public class MatchFinder : MonoBehaviour {
 
 			BlockGroup blockGroup = new BlockGroup();
 			checkBlockNeighbors(colorBlock, ref blockGroup);
+			if (blockGroup.getColorBlocks().Count > 0) matchCount++;
 		}
 	}
 
@@ -48,8 +50,9 @@ public class MatchFinder : MonoBehaviour {
 	}
 
 	void clearBlockGroups() {
+		matchCount = 0;
+		
 		ColorBlock[] colorBlocks = LevelManager.getInstance().getBlockSpawner().getColorBlocks();
-
 		foreach (ColorBlock colorBlock in colorBlocks)
 			colorBlock.setBlockGroup(null);
 	}

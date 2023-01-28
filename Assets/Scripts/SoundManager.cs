@@ -22,6 +22,13 @@ public class SoundManager : MonoBehaviour {
 		Events.getInstance().blockHitGoal.AddListener(delegate (GoalEntryPanelUI goalPanel) {
 			playAudioClip(cubeCollect);
 		});
+
+		Events.getInstance().blockBlasted.AddListener(delegate (Block block) {
+			if (block.GetType() == typeof(Duck))
+				playAudioClip(duck);
+			else if (block.GetType() == typeof(Balloon))
+				playAudioClip(balloon);
+		});
 	}
 
 	void playAudioClip(AudioClip audioClip) {

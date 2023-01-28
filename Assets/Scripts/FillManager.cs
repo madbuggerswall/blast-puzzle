@@ -8,39 +8,46 @@ public class FillManager : MonoBehaviour {
 
 	void Start() {
 		Events.getInstance().matchBlasted.AddListener(fill);
+		Events.getInstance().blockBlasted.AddListener(fill);
+	}
+
+	void fill(Block block) {
+		Events.getInstance().filling.Invoke();
+		fillColumn(getAffectedColumn(block));
 	}
 
 	void fill(BlockGroup blockGroup) {
-		BlockGrid blockGrid = LevelManager.getInstance().getBlockGrid();
 		Events.getInstance().filling.Invoke();
-
-		int minRow = blockGrid.getCellBounds().min.y;
-		int maxRow = blockGrid.getCellBounds().max.y;
-
 		foreach (int column in getAffectedColumns(blockGroup)) {
-			fillColumn(column, minRow, maxRow);
+			fillColumn(column);
 		}
 	}
 
 	List<int> getAffectedColumns(BlockGroup blockGroup) {
-		BlockGrid blockGrid = LevelManager.getInstance().getBlockGrid();
 		List<int> affectedColumns = new List<int>();
 
-		foreach (Block blastedBlock in blockGroup.getColorBlocks()) {
-			Vector2Int cellIndex = blockGrid.worldToCell(blastedBlock.transform.position);
-			if (!affectedColumns.Contains(cellIndex.x))
-				affectedColumns.Add(cellIndex.x);
+		foreach (Block block in blockGroup.getColorBlocks()) {
+			int affectedColumn = getAffectedColumn(block);
+			if (!affectedColumns.Contains(affectedColumn))
+				affectedColumns.Add(affectedColumn);
 		}
 
 		return affectedColumns;
 	}
 
-	void fillColumn(int column, int minRow, int maxRow) {
+	int getAffectedColumn(Block block) {
+		return LevelManager.getInstance().getBlockGrid().worldToCell(block.transform.position).x;
+	}
+
+	void fillColumn(int column) {
+		BlockGrid blockGrid = LevelManager.getInstance().getBlockGrid();
+		BlockSpawner blockSpawner = LevelManager.getInstance().getBlockSpawner();
+
 		int emptyCellCount = 0;
 		int layerMask = LayerMask.GetMask("Block");
 
-		BlockGrid blockGrid = LevelManager.getInstance().getBlockGrid();
-		BlockSpawner blockSpawner = LevelManager.getInstance().getBlockSpawner();
+		int minRow = blockGrid.getCellBounds().min.y;
+		int maxRow = blockGrid.getCellBounds().max.y;
 
 		for (int row = minRow; row < maxRow; row++) {
 			Vector2 pointPos = blockGrid.cellToWorld(new Vector2Int(column, row));

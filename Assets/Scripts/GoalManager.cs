@@ -9,8 +9,14 @@ public class Goal {
 	[SerializeField] int amount;
 	[SerializeField] Block block;
 
+	public void decrementAmount(int count) {
+		amount = Mathf.Clamp(amount - count, 0, int.MaxValue);
+		if (amount == 0)
+			Events.getInstance().goalAccomplished.Invoke(this);
+	}
+
+	// Getters
 	public int getAmount() { return amount; }
-	public void decrementAmount(int count) { amount = Mathf.Clamp(amount - count, 0, int.MaxValue); }
 	public Block getBlock() { return block; }
 }
 
