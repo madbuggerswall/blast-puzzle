@@ -441,7 +441,6 @@ MonoBehaviour:
   purpleBlock: {fileID: 1281326837}
   redBlock: {fileID: 1922853507}
   yellowBlock: {fileID: 26094812}
-  blockParticles: {fileID: 1867749493}
 --- !u!4 &208535877
 Transform:
   m_ObjectHideFlags: 0
@@ -488,6 +487,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 1867749496}
   - {fileID: 1104096412}
   m_Father: {fileID: 0}
   m_RootOrder: 5
@@ -504,6 +504,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d232d57c6467b4d2a900bff5ce9ec773, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  particlePrefab: {fileID: 1867749493}
   blue: {r: 0.25490198, g: 0.72156864, b: 0.9294118, a: 1}
   green: {r: 0.5411765, g: 0.8862746, b: 0.20784315, a: 1}
   purple: {r: 0.8705883, g: 0.29411766, b: 0.8862746, a: 1}
@@ -1392,7 +1393,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 356297350}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1104096413
 MonoBehaviour:
@@ -1434,8 +1435,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 1867749496}
+  m_Children: []
   m_Father: {fileID: 208535877}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2444,7 +2444,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!199 &1867749494
 ParticleSystemRenderer:
   serializedVersion: 6
@@ -7295,7 +7295,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1120054602}
+  m_Father: {fileID: 356297350}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1884726029

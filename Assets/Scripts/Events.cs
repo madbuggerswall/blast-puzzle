@@ -3,8 +3,9 @@ using UnityEngine.Events;
 public class Events {
 	static Events instance;
 
-	// Possibly UnityEvent<BlockGroup/BlockGroup>
 	public UnityEvent<BlockGroup> matchBlasted;
+	public UnityEvent<BlockGroup, Goal> goalMatch;
+	public UnityEvent<GoalEntryPanelUI> blockHitGoal;
 
 	// Rename these, or gridReady(bool)
 	public UnityEvent filling;
@@ -12,9 +13,12 @@ public class Events {
 
 	Events() {
 		matchBlasted = new UnityEvent<BlockGroup>();
+		goalMatch = new UnityEvent<BlockGroup, Goal>();
+		blockHitGoal = new UnityEvent<GoalEntryPanelUI>();
 
-		filling = new UnityEvent();		
-		fillingDone = new UnityEvent();		
+
+		filling = new UnityEvent();
+		fillingDone = new UnityEvent();
 	}
 
 	public static Events getInstance() {

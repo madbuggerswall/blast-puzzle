@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// TODO Fire an event when a goal is accomplished
 // Because Editor can't serialize (int , Block)
 [System.Serializable]
 public class Goal {
@@ -9,7 +10,7 @@ public class Goal {
 	[SerializeField] Block block;
 
 	public int getAmount() { return amount; }
-	public void decrementAmount() { amount--; }
+	public void decrementAmount(int count) { amount = Mathf.Clamp(amount - count, 0, int.MaxValue); }
 	public Block getBlock() { return block; }
 }
 
@@ -34,16 +35,12 @@ public class GoalManager : MonoBehaviour {
 			if (goalBlock == null)
 				continue;
 
-			foreach (ColorBlock colorBlock in blockGroup.getColorBlocks()) {
-				// Gateway for wrong colors and completed goals
-				bool colorsMatch = colorBlock.getColor() == goalBlock.getColor();
-				bool goalCompleted = goal.getAmount() == 0;
+			bool colorsMatch = blockGroup.getColorBlocks()[0].getColor() == goalBlock.getColor();
+			bool goalCompleted = goal.getAmount() <= 0;
 
-				if (!colorsMatch || goalCompleted)
-					break;
-
-				goal.decrementAmount();
-				FindObjectOfType<GoalEffectUI>().flyToGoal(colorBlock);
+			if (colorsMatch && !goalCompleted) {
+				goal.decrementAmount(blockGroup.getColorBlocks().Count);
+				Events.getInstance().goalMatch.Invoke(blockGroup, goal);
 			}
 		}
 	}

@@ -18,6 +18,10 @@ public class SoundManager : MonoBehaviour {
 		Events.getInstance().matchBlasted.AddListener(delegate (BlockGroup blockGroup) {
 			playAudioClip(cubeExplode);
 		});
+
+		Events.getInstance().blockHitGoal.AddListener(delegate (GoalEntryPanelUI goalPanel) {
+			playAudioClip(cubeCollect);
+		});
 	}
 
 	void playAudioClip(AudioClip audioClip) {

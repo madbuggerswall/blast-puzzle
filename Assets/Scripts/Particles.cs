@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Particles : MonoBehaviour {
+	[SerializeField] GameObject particlePrefab;
+
+	[Header("Colors")]
 	[SerializeField] Color blue;
 	[SerializeField] Color green;
 	[SerializeField] Color purple;
@@ -17,6 +20,7 @@ public class Particles : MonoBehaviour {
 
 	void Start() {
 		Events.getInstance().matchBlasted.AddListener(blastParticles);
+		// Events.getInstance().blockHitGoal.AddListener(blastParticles);
 	}
 
 	void blastParticles(BlockGroup blockGroup) {
@@ -27,8 +31,7 @@ public class Particles : MonoBehaviour {
 
 	// TODO
 	void spawnParticlesAtBlock(ColorBlock colorBlock) {
-		GameObject particlesPrefab = Prefabs.getInstance().getBlockParticles();
-		GameObject spawnedParticles = objectPool.spawn(particlesPrefab, colorBlock.transform.position);
+		GameObject spawnedParticles = objectPool.spawn(particlePrefab, colorBlock.transform.position);
 		ParticleSystem.MainModule mainModule = spawnedParticles.GetComponent<ParticleSystem>().main;
 		mainModule.startColor = getColor(colorBlock);
 	}

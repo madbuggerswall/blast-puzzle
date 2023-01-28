@@ -13,10 +13,6 @@ public class Prefabs : MonoBehaviour {
 	[SerializeField] Block redBlock;
 	[SerializeField] Block yellowBlock;
 
-	// Move this as to Particles Gameobject as a child.
-	[Header("Particles")]
-	[SerializeField] GameObject blockParticles;
-
 	void Awake() {
 		assertSingleton();
 	}
@@ -41,8 +37,6 @@ public class Prefabs : MonoBehaviour {
 	public Block getBlock(int blockColor) {
 		return getBlock((BlockColor) blockColor);
 	}
-
-	public GameObject getBlockParticles() { return blockParticles; }
 
 	// Singleton
 	public static Prefabs getInstance() { return instance; }
