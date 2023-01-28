@@ -10,7 +10,7 @@ public class BlockGroup {
 
 	public void blast() {
 		foreach (ColorBlock block in colorBlocks) {
-			block.gameObject.SetActive(false);
+			block.blast();
 		}
 
 		Events.getInstance().matchBlasted.Invoke(this);

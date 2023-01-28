@@ -17,6 +17,8 @@ public abstract class Block : MonoBehaviour {
 		rigidBody = GetComponent<Rigidbody2D>();
 	}
 
+	public abstract void blast();
+
 	// Fall from top of the screen
 	public void fall(int rowCount) {
 		BlockGrid blockGrid = LevelManager.getInstance().getBlockGrid();

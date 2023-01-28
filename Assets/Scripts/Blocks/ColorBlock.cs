@@ -22,6 +22,10 @@ public class ColorBlock : Block {
 		blockGroup?.blast();
 	}
 
+	public override void blast() {
+		gameObject.SetActive(false);
+	}
+
 	// Getters & Setters
 	public BlockColor getColor() { return color; }
 	public BlockGroup getBlockGroup() { return blockGroup; }

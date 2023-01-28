@@ -3,15 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Duck : Block {
-	
 	void Start() {
 		Events.getInstance().fillingDone.AddListener(blastAtBottom);
 	}
 
+	public override void blast() {
+		gameObject.SetActive(false);
+		Events.getInstance().blockBlasted.Invoke(this);
+	}
+
 	void blastAtBottom() {
 		if (isAtTheBottom() && gameObject.activeInHierarchy) {
-			gameObject.SetActive(false);
-			Events.getInstance().blockBlasted.Invoke(this);
+			blast();
 		}
 	}
 
