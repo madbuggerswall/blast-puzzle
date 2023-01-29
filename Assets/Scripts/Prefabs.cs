@@ -17,7 +17,7 @@ public class Prefabs : MonoBehaviour {
 	[SerializeField] Block duck;
 	[SerializeField] Block balloon;
 
-	[Header("Power-ups")]
+	[Header("Power-up Blocks")]
 	[SerializeField] Rocket rocket;
 
 

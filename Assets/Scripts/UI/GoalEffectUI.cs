@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-// Rename this to GoalAnimationUI/GoalBlockAnimationUI
+// Rename this to BlockEffects/BlockFX
 public class GoalEffectUI : MonoBehaviour {
 	[SerializeField] GameObject spritePrefab;
 	ObjectPool objectPool;

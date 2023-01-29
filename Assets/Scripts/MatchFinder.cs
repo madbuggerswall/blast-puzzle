@@ -38,6 +38,7 @@ public class MatchFinder : MonoBehaviour {
 			// Multiply direction with grid size for correctness.
 			Collider2D collider = Physics2D.OverlapPoint((Vector2) colorBlock.transform.position + direction, layerMask);
 
+			// TODO Refactor this block
 			if (collider?.GetComponent<Block>() is Balloon) {
 				Balloon neighbor = collider?.GetComponent<Balloon>();
 				if (!blockGroup.contains(neighbor))

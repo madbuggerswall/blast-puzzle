@@ -10,7 +10,6 @@ public enum BlockColor {
 
 public class ColorBlock : Block {
 	[SerializeField] BlockColor color;
-
 	BlockGroup blockGroup;
 
 	// IPoolable.reset

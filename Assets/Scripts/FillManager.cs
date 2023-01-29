@@ -13,7 +13,7 @@ public class FillManager : MonoBehaviour {
 
 	void fill(Block block) {
 		// Should be if(block is BlastAffected)
-		if (block is not Duck)
+		if (block is Balloon)
 			return;
 		
 		Events.getInstance().filling.Invoke();
