@@ -40,15 +40,15 @@ public class BlockSpawner : MonoBehaviour {
 		return spawnedBlock;
 	}
 
-	// 80% Colored 10% Duck 10% Balloon
+	// 95% Colored 4% ballon 1% Duck
 	Block getRandomBlockPrefab() {
 		float randomValue = Random.value;
-		if (randomValue < .8f)
+		if (randomValue < .95f)
 			return Prefabs.getInstance().getBlock(Random.Range(0, colorCount));
-		else if (randomValue < .9f)
-			return Prefabs.getInstance().getDuck();
-		else
+		else if (randomValue < .99f)
 			return Prefabs.getInstance().getBalloon();
+		else
+			return Prefabs.getInstance().getDuck();
 	}
 
 	// Getters
