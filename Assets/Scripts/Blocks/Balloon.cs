@@ -6,7 +6,6 @@ using UnityEngine;
 public abstract class BlastAffected : Block { }
 
 public class Balloon : BlastAffected, IFillable, IFallable {
-	// Block
 	public override void blast() {
 		gameObject.SetActive(false);
 	}

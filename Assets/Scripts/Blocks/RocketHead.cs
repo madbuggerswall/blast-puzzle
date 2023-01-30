@@ -21,6 +21,9 @@ public class RocketHead : MonoBehaviour {
 	}
 
 	void OnBecameInvisible() {
+		if (!gameObject.activeInHierarchy)
+			return;
+		
 		isVisible = false;
 		GetComponentInParent<Rocket>().checkRocketHeads();
 		LevelManager.getInstance().getPowerUpManager().decrementRocketHeadsFired();
@@ -53,10 +56,10 @@ public class RocketHead : MonoBehaviour {
 	void checkCell(Vector2Int cell) {
 		BlockGrid blockGrid = LevelManager.getInstance().getBlockGrid();
 		PowerUpManager powerUpManager = LevelManager.getInstance().getPowerUpManager();
-		
+
 		Collider2D collider = Physics2D.OverlapPoint(blockGrid.cellToWorld(cell), layerMask);
 		Block block = collider?.GetComponent<Block>();
-		
+
 		if (block is not BottomBlasted && block is not null && !powerUpManager.contains(block)) {
 			powerUpManager.addBlock(block);
 			block.blast();

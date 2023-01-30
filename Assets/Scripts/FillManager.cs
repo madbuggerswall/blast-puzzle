@@ -16,6 +16,7 @@ public class FillManager : MonoBehaviour {
 		Events.getInstance().powerUpBlasted.AddListener(fill);
 	}
 
+	// For Duck and other BottomBlasted
 	void fill(Block block) {
 		if (block is not BottomBlasted)
 			return;
@@ -23,6 +24,7 @@ public class FillManager : MonoBehaviour {
 		fillColumn(getAffectedColumn(block));
 	}
 
+	// For ColorMatch and BlastAffected
 	void fill(ColorMatch colorMatch) {
 		Events.getInstance().filling.Invoke();
 		foreach (int column in getAffectedColumns(colorMatch)) {
@@ -30,6 +32,7 @@ public class FillManager : MonoBehaviour {
 		}
 	}
 
+	// For blocks blasted via Rocket or PowerUps
 	void fill(List<Block> blocks) {
 		Events.getInstance().filling.Invoke();
 		foreach (int column in getAffectedColumns(blocks)) {

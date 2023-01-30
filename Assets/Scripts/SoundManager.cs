@@ -24,5 +24,7 @@ public class SoundManager : MonoBehaviour {
 			playAudioSource(duck);
 		else if (block is Balloon)
 			playAudioSource(balloon);
+		else if (block is ColorBlock)
+			playAudioSource(cubeExplode);
 	}
 }

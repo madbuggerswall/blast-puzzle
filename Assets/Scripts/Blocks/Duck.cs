@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-// For other blocks that blast at bottom
+// For other blocks that blast at bottom. Rename this class.
 public abstract class BottomBlasted : Block {
 	protected void blastAtBottom() {
 		if (isAtTheBottom() && gameObject.activeInHierarchy) {

@@ -5,7 +5,7 @@ using UnityEngine.Tilemaps;
 
 public class BlockGrid : MonoBehaviour {
 	readonly Vector2Int minSize = new Vector2Int(4, 4);
-	readonly Vector2Int maxSize = new Vector2Int(28, 12);
+	readonly Vector2Int maxSize = new Vector2Int(10, 16);
 	readonly Vector2 margin = new Vector2(0.24f, 0.4f);
 
 	[SerializeField] Vector2Int size;
@@ -17,8 +17,14 @@ public class BlockGrid : MonoBehaviour {
 		spriteRenderer = GetComponent<SpriteRenderer>();
 		grid = GetComponentInParent<Grid>();
 
+		clampSize();
 		setGridSize();
 		adjustPosition();
+	}
+
+	void clampSize() {
+		size.x = Mathf.Clamp(size.x, minSize.x, maxSize.x);
+		size.y = Mathf.Clamp(size.y, minSize.y, maxSize.y);
 	}
 
 	void setGridSize() {

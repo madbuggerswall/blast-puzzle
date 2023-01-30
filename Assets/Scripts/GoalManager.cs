@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-// TODO Fire an event when a goal is accomplished
 // Because Editor can't serialize (int , Block)
 [System.Serializable]
 public class Goal {
@@ -21,18 +20,16 @@ public class Goal {
 }
 
 public class GoalManager : MonoBehaviour {
-	// Maybe a list of goals instead of this, would ditch GoalEntry class that way
 	[SerializeField] List<Goal> goals;
 	[SerializeField] int movesLeft;
 
 	void Start() {
-		Events.getInstance().matchBlasted.AddListener(checkForGoals);
-		Events.getInstance().matchBlasted.AddListener(delegate { movesLeft--; });
-		Events.getInstance().blockBlasted.AddListener(checkForGoals);
+		Events.getInstance().matchBlasted.AddListener(checkGoals);
+		Events.getInstance().matchBlasted.AddListener(delegate { decrementMovesLeft(); });
+		Events.getInstance().blockBlasted.AddListener(checkGoals);
 	}
 
-	// Rename this 
-	void checkForGoals(ColorMatch colorMatch) {
+	void checkGoals(ColorMatch colorMatch) {
 		foreach (Goal goal in goals) {
 			// Gateway for color block goals
 			if (goal.getBlock() is not ColorBlock)
@@ -49,7 +46,7 @@ public class GoalManager : MonoBehaviour {
 		}
 	}
 
-	void checkForGoals(Block block) {
+	void checkGoals(Block block) {
 		foreach (Goal goal in goals) {
 			if (goal.getBlock().GetType() != block.GetType())
 				continue;
@@ -64,6 +61,12 @@ public class GoalManager : MonoBehaviour {
 				Events.getInstance().blockInGoals.Invoke(block, goal);
 			}
 		}
+	}
+
+	void decrementMovesLeft() {
+		movesLeft--;
+		if (movesLeft == 0)
+			Events.getInstance().noMovesLeft.Invoke();
 	}
 
 	public List<Goal> getGoals() { return goals; }

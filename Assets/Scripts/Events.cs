@@ -14,12 +14,11 @@ public class Events {
 	public UnityEvent<Block, Goal> blockInGoals;
 	public UnityEvent<GoalEntryPanelUI> blockHitGoal;
 	public UnityEvent<Goal> goalAccomplished;
+	public UnityEvent noMovesLeft;
 
 	// Fill
 	public UnityEvent filling;
 	public UnityEvent fillingDone;
-
-
 
 	Events() {
 		// Blast
@@ -32,11 +31,11 @@ public class Events {
 		blockInGoals = new UnityEvent<Block, Goal>();
 		blockHitGoal = new UnityEvent<GoalEntryPanelUI>();
 		goalAccomplished = new UnityEvent<Goal>();
+		noMovesLeft = new UnityEvent();
 
 		// Fill
 		filling = new UnityEvent();
 		fillingDone = new UnityEvent();
-
 	}
 
 	public static Events getInstance() {

@@ -10,12 +10,12 @@ public class ColorMatch {
 	}
 
 	public void blast() {
-		// Blast the color matching group
+		// Blast the color matched blocks
 		foreach (ColorBlock block in colorBlocks) {
 			block.blast();
 		}
 
-		// Blast the neighbor triggered group (balloons etc.)
+		// Blast the neighbor triggered blocks (balloons etc.)
 		foreach (Block block in blastAffectedBlocks) {
 			block.blast();
 			Events.getInstance().blockBlasted.Invoke(block);
