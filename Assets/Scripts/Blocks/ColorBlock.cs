@@ -1,14 +1,8 @@
 using UnityEngine;
 
-public enum BlockColor {
-	blue,
-	green,
-	purple,
-	red,
-	yellow
-}
+public enum BlockColor { blue, green, purple, red, yellow }
 
-public class ColorBlock : Block, IFallable, IFillable {
+public class ColorBlock : Block, IFillable, IFallable {
 	[SerializeField] BlockColor color;
 	ColorMatch colorMatch;
 
@@ -39,16 +33,16 @@ public class ColorBlock : Block, IFallable, IFillable {
 		gameObject.SetActive(false);
 	}
 
-	// IFallable Fall from top of the screen
-	public void fall(int rowCount) {
-		Vector2 target = getFallingTarget(rowCount);
+	// Fill empty spaces below
+	void IFillable.fill(int rowCount) {
+		Vector2 target = getFillingTarget(rowCount);
 		setSortingOrder(target);
 		StartCoroutine(moveTowardsTarget(target));
 	}
 
-	// IFillable Fill empty spaces below
-	public void fill(int rowCount) {
-		Vector2 target = getFillingTarget(rowCount);
+	// Fall from top of the screen
+	void IFallable.fall(int rowCount) {
+		Vector2 target = getFallingTarget(rowCount);
 		setSortingOrder(target);
 		StartCoroutine(moveTowardsTarget(target));
 	}

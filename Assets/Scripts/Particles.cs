@@ -22,12 +22,18 @@ public class Particles : MonoBehaviour {
 	void Start() {
 		Events.getInstance().matchBlasted.AddListener(blastParticles);
 		Events.getInstance().blockHitGoal.AddListener(blastParticles);
+		Events.getInstance().blockBlasted.AddListener(blastParticles);
 	}
 
 	void blastParticles(ColorMatch colorMatch) {
 		foreach (ColorBlock colorBlock in colorMatch.getColorBlocks()) {
 			spawnParticlesAtBlock(colorBlock);
 		}
+	}
+
+	void blastParticles(Block block) {
+		if (block is ColorBlock)
+			spawnParticlesAtBlock((ColorBlock) block);
 	}
 
 	void blastParticles(GoalEntryPanelUI goalPanel) {

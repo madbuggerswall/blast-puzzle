@@ -5313,7 +5313,7 @@ MonoBehaviour:
   yellowBlock: {fileID: 26094812}
   duck: {fileID: 1161172928}
   balloon: {fileID: 1927980071}
-  rocket: {fileID: 1412277364}
+  rocket: {fileID: 1412277367}
 --- !u!4 &208535877
 Transform:
   m_ObjectHideFlags: 0
@@ -6363,7 +6363,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &904393160
 Transform:
   m_ObjectHideFlags: 0
@@ -7457,6 +7457,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1379169554}
   - component: {fileID: 1379169555}
+  - component: {fileID: 1379169556}
   m_Layer: 8
   m_Name: rocket_right
   m_TagString: Untagged
@@ -7519,7 +7520,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 36
   m_Sprite: {fileID: 21300000, guid: 708c351f8fc064958bccb375809db911, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -7531,6 +7532,19 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1379169556
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1379169553}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 35329439210f14f6989bbfbdf65fe387, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  direction: 1
 --- !u!1 &1395875638
 GameObject:
   m_ObjectHideFlags: 0
@@ -7587,7 +7601,7 @@ GameObject:
   - component: {fileID: 1412277363}
   - component: {fileID: 1412277366}
   - component: {fileID: 1412277365}
-  - component: {fileID: 1412277364}
+  - component: {fileID: 1412277367}
   m_Layer: 8
   m_Name: Rocket
   m_TagString: Untagged
@@ -7612,18 +7626,6 @@ Transform:
   m_Father: {fileID: 904393160}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1412277364
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1412277362}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 356830c202a3940e1be4c5ab123232bd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!61 &1412277365
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -7671,6 +7673,21 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &1412277367
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1412277362}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b46381ee32e884fce8a011439c9bc3c2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rocketLeft: {fileID: 1672725180}
+  rocketRight: {fileID: 1379169556}
+  blocks: []
 --- !u!1 &1485850188
 GameObject:
   m_ObjectHideFlags: 0
@@ -7992,7 +8009,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e65e69ce26f94d79b56a56d325aa599, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  size: {x: 8, y: 12}
+  size: {x: 8, y: 13}
 --- !u!1 &1672725177
 GameObject:
   m_ObjectHideFlags: 0
@@ -8003,6 +8020,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1672725178}
   - component: {fileID: 1672725179}
+  - component: {fileID: 1672725180}
   m_Layer: 8
   m_Name: rocket_left
   m_TagString: Untagged
@@ -8065,7 +8083,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 36
   m_Sprite: {fileID: 21300000, guid: b525653e77439456cadf24031e8a1e8f, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -8077,6 +8095,19 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1672725180
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1672725177}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 35329439210f14f6989bbfbdf65fe387, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  direction: 3
 --- !u!1 &1867749493
 GameObject:
   m_ObjectHideFlags: 0

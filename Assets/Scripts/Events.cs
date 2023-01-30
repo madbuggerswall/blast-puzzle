@@ -1,4 +1,5 @@
 using UnityEngine.Events;
+using System.Collections.Generic;
 
 public class Events {
 	static Events instance;
@@ -6,10 +7,11 @@ public class Events {
 	// Blast
 	public UnityEvent<ColorMatch> matchBlasted;
 	public UnityEvent<Block> blockBlasted;
+	public UnityEvent<List<Block>> powerUpBlasted;
 
 	// Goal
-	public UnityEvent<ColorMatch, Goal> matchInGoals;	
-	public UnityEvent<Block, Goal> blockInGoals;	
+	public UnityEvent<ColorMatch, Goal> matchInGoals;
+	public UnityEvent<Block, Goal> blockInGoals;
 	public UnityEvent<GoalEntryPanelUI> blockHitGoal;
 	public UnityEvent<Goal> goalAccomplished;
 
@@ -17,10 +19,13 @@ public class Events {
 	public UnityEvent filling;
 	public UnityEvent fillingDone;
 
+
+
 	Events() {
 		// Blast
 		matchBlasted = new UnityEvent<ColorMatch>();
 		blockBlasted = new UnityEvent<Block>();
+		powerUpBlasted = new UnityEvent<List<Block>>();
 
 		// Goal
 		matchInGoals = new UnityEvent<ColorMatch, Goal>();
@@ -31,6 +36,7 @@ public class Events {
 		// Fill
 		filling = new UnityEvent();
 		fillingDone = new UnityEvent();
+
 	}
 
 	public static Events getInstance() {

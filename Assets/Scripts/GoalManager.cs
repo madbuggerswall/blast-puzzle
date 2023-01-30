@@ -54,6 +54,10 @@ public class GoalManager : MonoBehaviour {
 			if (goal.getBlock().GetType() != block.GetType())
 				continue;
 
+			if (block is ColorBlock)
+				if ((block as ColorBlock).getColor() != (goal.getBlock() as ColorBlock).getColor())
+					continue;
+
 			bool goalCompleted = goal.getAmount() <= 0;
 			if (!goalCompleted) {
 				goal.decrementAmount(1);

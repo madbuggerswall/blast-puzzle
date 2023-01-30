@@ -13,12 +13,12 @@ public class FillManager : MonoBehaviour {
 	void Start() {
 		Events.getInstance().matchBlasted.AddListener(fill);
 		Events.getInstance().blockBlasted.AddListener(fill);
+		Events.getInstance().powerUpBlasted.AddListener(fill);
 	}
 
 	void fill(Block block) {
-		if (block is BlastAffected)
+		if (block is not BottomBlasted)
 			return;
-
 		Events.getInstance().filling.Invoke();
 		fillColumn(getAffectedColumn(block));
 	}
@@ -30,10 +30,21 @@ public class FillManager : MonoBehaviour {
 		}
 	}
 
+	void fill(List<Block> blocks) {
+		Events.getInstance().filling.Invoke();
+		foreach (int column in getAffectedColumns(blocks)) {
+			fillColumn(column);
+		}
+	}
+
 	List<int> getAffectedColumns(ColorMatch colorMatch) {
+		return getAffectedColumns(colorMatch.getAllBlocks());
+	}
+
+	List<int> getAffectedColumns(List<Block> blocks) {
 		List<int> affectedColumns = new List<int>();
 
-		foreach (Block block in colorMatch.getAllBlocks()) {
+		foreach (Block block in blocks) {
 			int affectedColumn = getAffectedColumn(block);
 			if (!affectedColumns.Contains(affectedColumn))
 				affectedColumns.Add(affectedColumn);
@@ -41,6 +52,8 @@ public class FillManager : MonoBehaviour {
 
 		return affectedColumns;
 	}
+
+
 
 	int getAffectedColumn(Block block) {
 		return LevelManager.getInstance().getBlockGrid().worldToCell(block.transform.position).x;
