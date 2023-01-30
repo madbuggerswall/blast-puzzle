@@ -3,7 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class FillManager : MonoBehaviour {
+	int layerMask;
 	[SerializeField] int shiftingBlocks;
+
+	void Awake() {
+		layerMask = LayerMask.GetMask("Block");
+	}
 
 	void Start() {
 		Events.getInstance().matchBlasted.AddListener(fill);
@@ -50,7 +55,6 @@ public class FillManager : MonoBehaviour {
 
 	// Shifts blocks to fill blasted cells
 	void fillEmptyCells(int column, out int emptyCellCount) {
-		int layerMask = LayerMask.GetMask("Block");
 		BlockGrid blockGrid = LevelManager.getInstance().getBlockGrid();
 
 		emptyCellCount = 0;

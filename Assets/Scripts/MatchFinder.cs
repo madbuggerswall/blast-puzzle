@@ -37,20 +37,21 @@ public class MatchFinder : MonoBehaviour {
 		foreach (Vector2 direction in directions) {
 			// Multiply direction with grid size for correctness.
 			Collider2D collider = Physics2D.OverlapPoint((Vector2) colorBlock.transform.position + direction, layerMask);
+			Block neighbor = collider?.GetComponent<Block>();
 
-			// TODO Refactor this block
-			if (collider?.GetComponent<Block>() is BlastAffected) {
-				BlastAffected neighbor = collider?.GetComponent<BlastAffected>();
-				if (!colorMatch.contains(neighbor))
-					colorMatch.addBlock(neighbor);
-			} else if (collider?.GetComponent<Block>() is ColorBlock) {
-				ColorBlock neighbor = collider?.GetComponent<ColorBlock>();
-				if (colorBlock.getColor() == neighbor?.getColor() && !colorMatch.contains(neighbor)) {
+			if (neighbor is BlastAffected) {
+				if (!colorMatch.contains((BlastAffected) neighbor))
+					colorMatch.addBlock((BlastAffected) neighbor);
+			} else if (neighbor is ColorBlock) {
+				bool colorsMatch = colorBlock.getColor() == ((ColorBlock) neighbor).getColor();
+				bool alreadyInMatch = colorMatch.contains((ColorBlock) neighbor);
+				
+				if (colorsMatch && !alreadyInMatch) {
 					if (colorMatch.isEmpty())
 						colorMatch.addBlock(colorBlock);
 
-					colorMatch.addBlock(neighbor);
-					checkBlockNeighbors(neighbor, ref colorMatch);
+					colorMatch.addBlock((ColorBlock) neighbor);
+					checkBlockNeighbors((ColorBlock) neighbor, ref colorMatch);
 				}
 			}
 		}
