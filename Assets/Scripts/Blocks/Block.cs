@@ -2,14 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-// Make Block abstract, and colored blocks Colored Block or MatchBlock : Block
-// Duck and Balloon would be inheriting from Block in that way
-// All movement related
-// Fake the goal movement
-
+// Some blocks are not fillable (Crate)
 public interface IFillable {
 	public void fill(int rowCount);
 }
+
+// Some blocks are not fallable (Rocket)
 public interface IFallable {
 	public void fall(int rowCount);
 }

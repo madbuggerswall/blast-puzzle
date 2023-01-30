@@ -16,10 +16,12 @@ public class BlockGrid : MonoBehaviour {
 	void Awake() {
 		spriteRenderer = GetComponent<SpriteRenderer>();
 		grid = GetComponentInParent<Grid>();
+
+		setGridSize();
+		adjustPosition();
 	}
 
 	void Start() {
-		setGridSize();
 	}
 
 	// TODO: Doesn't work with odd numbers
@@ -34,9 +36,10 @@ public class BlockGrid : MonoBehaviour {
 		if (size.x % 2 != 0)
 			offset.x = 0.5f;
 		if (size.y % 2 != 0)
-			offset.y = transform.position.y + 0.5f;
+			offset.y = 0.5f;
 
-		transform.position = offset;
+		transform.position += offset;
+		Camera.main.transform.position = new Vector3(offset.x, offset.y, Camera.main.transform.position.z);
 	}
 
 	// Grid 
@@ -47,7 +50,7 @@ public class BlockGrid : MonoBehaviour {
 	public Vector2Int getSize() { return size; }
 	public (Vector2Int min, Vector2Int max) getCellBounds() {
 		Vector2Int firstCell = worldToCell((Vector2) transform.position - size / 2);
-		Vector2Int lastCell = worldToCell((Vector2) transform.position + size / 2);
+		Vector2Int lastCell = worldToCell((Vector2) transform.position + Vector2Int.CeilToInt((Vector2) size / 2));
 		return (firstCell, lastCell);
 	}
 }
