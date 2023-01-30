@@ -15,7 +15,7 @@ public class FillManager : MonoBehaviour {
 		// Should be if(block is BlastAffected)
 		if (block is Balloon)
 			return;
-		
+
 		Events.getInstance().filling.Invoke();
 		fillColumn(getAffectedColumn(block));
 	}
@@ -65,7 +65,7 @@ public class FillManager : MonoBehaviour {
 			if (collider == null)
 				emptyCellCount++;
 			else if (emptyCellCount > 0) {
-				collider.GetComponent<Block>().fill(emptyCellCount);
+				collider.GetComponent<IFillable>().fill(emptyCellCount);
 				shiftingBlocks++;
 			}
 		}
@@ -79,8 +79,8 @@ public class FillManager : MonoBehaviour {
 
 		for (int targetRow = emptyCellCount; targetRow > 0; targetRow--) {
 			Vector2 spawnPosition = blockGrid.cellToWorld(new Vector2Int(column, fallingRow - targetRow));
-			Block block = blockSpawner.spawnRandomBlock(spawnPosition);
-			block.fall(targetRow);
+			IFallable fallableBlock = blockSpawner.spawnRandomFallable(spawnPosition);
+			fallableBlock.fall(targetRow);
 			shiftingBlocks++;
 		}
 	}

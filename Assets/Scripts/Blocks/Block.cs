@@ -7,44 +7,39 @@ using UnityEngine;
 // All movement related
 // Fake the goal movement
 
+public interface IFillable {
+	public void fill(int rowCount);
+}
+public interface IFallable {
+	public void fall(int rowCount);
+}
+
 [RequireComponent(typeof(Rigidbody2D), typeof(BoxCollider2D))]
 public abstract class Block : MonoBehaviour {
-	SpriteRenderer spriteRenderer;
 	Rigidbody2D rigidBody;
 
-	void Awake() {
-		spriteRenderer = GetComponent<SpriteRenderer>();
+	protected virtual void Awake() {
 		rigidBody = GetComponent<Rigidbody2D>();
+		rigidBody.isKinematic = true;
 	}
 
 	public abstract void blast();
 
-	// Fall from top of the screen
-	public void fall(int rowCount) {
+	protected Vector2 getFillingTarget(int rowCount) {
 		BlockGrid blockGrid = LevelManager.getInstance().getBlockGrid();
+		Vector2Int targetCell = blockGrid.worldToCell(transform.position + Vector3.down * rowCount);
+		return blockGrid.cellToWorld(targetCell);
+	}
 
+	protected Vector2 getFallingTarget(int rowCount) {
+		BlockGrid blockGrid = LevelManager.getInstance().getBlockGrid();
 		int maxRow = blockGrid.getCellBounds().max.y;
 		Vector2Int targetCell = blockGrid.worldToCell(new Vector2(transform.position.x, maxRow - rowCount));
-		Vector2 target = blockGrid.cellToWorld(targetCell);
-		int sortingOrder = blockGrid.getSize().y / 2 + maxRow - rowCount;
-		spriteRenderer.sortingOrder = sortingOrder;
-
-		StartCoroutine(moveTowardsTarget(target));
+		return blockGrid.cellToWorld(targetCell);
 	}
 
-	// Fill empty spaces below
-	public void fill(int rowCount) {
-		// Guaranteed snapping
-		BlockGrid blockGrid = LevelManager.getInstance().getBlockGrid();
 
-		Vector2Int targetCell = blockGrid.worldToCell(transform.position + Vector3.down * rowCount);
-		Vector2 target = blockGrid.cellToWorld(targetCell);
-		spriteRenderer.sortingOrder -= rowCount;
-
-		StartCoroutine(moveTowardsTarget(target));
-	}
-
-	IEnumerator moveTowardsTarget(Vector2 target) {
+	protected IEnumerator moveTowardsTarget(Vector2 target) {
 		const float maxDelta = 12;
 
 		while (rigidBody.position != target) {
@@ -55,10 +50,4 @@ public abstract class Block : MonoBehaviour {
 
 		LevelManager.getInstance().getFillManager().decrementShiftingBlocks();
 	}
-
-	// To avoid undesired overlappings
-	public void setSortingOrder(int sortingOrder) {
-		spriteRenderer.sortingOrder = sortingOrder;
-	}
-
 }

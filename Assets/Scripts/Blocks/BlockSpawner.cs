@@ -17,6 +17,21 @@ public class BlockSpawner : MonoBehaviour {
 		initializeGrid();
 	}
 
+	// Spawn a random block at position
+	public Block spawnRandomBlock(Vector3 position) {
+		return spawnBlock(getRandomBlockPrefab(), position);
+	}
+
+	public IFallable spawnRandomFallable(Vector3 position) {
+		return (IFallable) spawnBlock(getRandomBlockPrefab(), position);
+	}
+
+	public Block spawnBlock(Block block, Vector3 position) {
+		Block spawnedBlock = objectPool.spawn(block.gameObject, position).GetComponent<Block>();
+		spawnedBlock.gameObject.SetActive(true);
+		return spawnedBlock;
+	}
+
 	// Fills BlockGrid with random colored blocks
 	void initializeGrid() {
 		BlockGrid blockGrid = LevelManager.getInstance().getBlockGrid();
@@ -25,19 +40,12 @@ public class BlockSpawner : MonoBehaviour {
 		for (int column = firstCell.x; column < lastCell.x; column++) {
 			for (int row = firstCell.y; row < lastCell.y; row++) {
 				Vector2 position = blockGrid.cellToWorld(new Vector2Int(column, row));
-				int sortingOrder = blockGrid.getSize().y / 2 + row;
-
 				Block block = spawnRandomBlock(position);
-				block.setSortingOrder(sortingOrder);
+
+				if (block is ColorBlock)
+					((ColorBlock) block).setSortingOrder(new Vector2Int(column, row));
 			}
 		}
-	}
-
-	// Spawn a random block at position
-	public Block spawnRandomBlock(Vector3 position) {
-		Block spawnedBlock = objectPool.spawn(getRandomBlockPrefab().gameObject, position).GetComponent<Block>();
-		spawnedBlock.gameObject.SetActive(true);
-		return spawnedBlock;
 	}
 
 	// 95% Colored 4% ballon 1% Duck
