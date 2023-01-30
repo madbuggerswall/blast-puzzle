@@ -13,8 +13,8 @@ public class GoalEffectUI : MonoBehaviour {
 	}
 
 	void Start() {
-		Events.getInstance().goalMatch.AddListener(moveMatchTowardsGoalIcon);
-		Events.getInstance().goalBlock.AddListener(moveBlockTowardsGoalIcon);
+		Events.getInstance().matchInGoals.AddListener(moveMatchTowardsGoalIcon);
+		Events.getInstance().blockInGoals.AddListener(moveBlockTowardsGoalIcon);
 	}
 
 	void moveMatchTowardsGoalIcon(ColorMatch colorMatch, Goal goal) {

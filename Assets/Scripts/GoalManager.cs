@@ -43,12 +43,11 @@ public class GoalManager : MonoBehaviour {
 
 			if (colorsMatch && !goalCompleted) {
 				goal.decrementAmount(colorMatch.getColorBlocks().Count);
-				Events.getInstance().goalMatch.Invoke(colorMatch, goal);
+				Events.getInstance().matchInGoals.Invoke(colorMatch, goal);
 			}
 		}
 	}
 
-	// TODO Goals should work with Duck and Balloon blocks
 	void checkForGoals(Block block) {
 		foreach (Goal goal in goals) {
 			if (goal.getBlock().GetType() != block.GetType())
@@ -57,7 +56,7 @@ public class GoalManager : MonoBehaviour {
 			bool goalCompleted = goal.getAmount() <= 0;
 			if (!goalCompleted) {
 				goal.decrementAmount(1);
-				Events.getInstance().goalBlock.Invoke(block, goal);
+				Events.getInstance().blockInGoals.Invoke(block, goal);
 			}
 		}
 	}

@@ -2,7 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Balloon : Block, IFallable, IFillable {
+// For other blast triggered blocks (Crate)
+public abstract class BlastAffected : Block { }
+
+public class Balloon : BlastAffected, IFallable, IFillable {
 	// Block
 	public override void blast() {
 		gameObject.SetActive(false);

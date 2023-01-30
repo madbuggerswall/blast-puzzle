@@ -39,8 +39,8 @@ public class MatchFinder : MonoBehaviour {
 			Collider2D collider = Physics2D.OverlapPoint((Vector2) colorBlock.transform.position + direction, layerMask);
 
 			// TODO Refactor this block
-			if (collider?.GetComponent<Block>() is Balloon) {
-				Balloon neighbor = collider?.GetComponent<Balloon>();
+			if (collider?.GetComponent<Block>() is BlastAffected) {
+				BlastAffected neighbor = collider?.GetComponent<BlastAffected>();
 				if (!colorMatch.contains(neighbor))
 					colorMatch.addBlock(neighbor);
 			} else if (collider?.GetComponent<Block>() is ColorBlock) {

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class FillManager : MonoBehaviour {
-	// Shifting block count
 	[SerializeField] int shiftingBlocks;
 
 	void Start() {
@@ -12,8 +11,7 @@ public class FillManager : MonoBehaviour {
 	}
 
 	void fill(Block block) {
-		// Should be if(block is BlastAffected)
-		if (block is Balloon)
+		if (block is BlastAffected)
 			return;
 
 		Events.getInstance().filling.Invoke();

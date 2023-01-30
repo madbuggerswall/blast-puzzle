@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 
-// Rename this class to Match/ColorMatch/ColorGroup
 public class ColorMatch {
 	List<ColorBlock> colorBlocks;
 	List<Block> blastAffectedBlocks;

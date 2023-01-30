@@ -8,8 +8,8 @@ public class Events {
 	public UnityEvent<Block> blockBlasted;
 
 	// Goal
-	public UnityEvent<ColorMatch, Goal> goalMatch;	//Rename this
-	public UnityEvent<Block, Goal> goalBlock;	//Rename this
+	public UnityEvent<ColorMatch, Goal> matchInGoals;	
+	public UnityEvent<Block, Goal> blockInGoals;	
 	public UnityEvent<GoalEntryPanelUI> blockHitGoal;
 	public UnityEvent<Goal> goalAccomplished;
 
@@ -23,8 +23,8 @@ public class Events {
 		blockBlasted = new UnityEvent<Block>();
 
 		// Goal
-		goalMatch = new UnityEvent<ColorMatch, Goal>();
-		goalBlock = new UnityEvent<Block, Goal>();
+		matchInGoals = new UnityEvent<ColorMatch, Goal>();
+		blockInGoals = new UnityEvent<Block, Goal>();
 		blockHitGoal = new UnityEvent<GoalEntryPanelUI>();
 		goalAccomplished = new UnityEvent<Goal>();
 
