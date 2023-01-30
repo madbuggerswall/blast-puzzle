@@ -1,11 +1,11 @@
 using System.Collections.Generic;
 
 // Rename this class to Match/ColorMatch/ColorGroup
-public class BlockGroup {
+public class ColorMatch {
 	List<ColorBlock> colorBlocks;
 	List<Block> blastAffectedBlocks;
 
-	public BlockGroup() {
+	public ColorMatch() {
 		colorBlocks = new List<ColorBlock>();
 		blastAffectedBlocks = new List<Block>();
 	}

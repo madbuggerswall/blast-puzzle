@@ -23,8 +23,8 @@ public class Particles : MonoBehaviour {
 		// Events.getInstance().blockHitGoal.AddListener(blastParticles);
 	}
 
-	void blastParticles(BlockGroup blockGroup) {
-		foreach (ColorBlock colorBlock in blockGroup.getColorBlocks()) {
+	void blastParticles(ColorMatch colorMatch) {
+		foreach (ColorBlock colorBlock in colorMatch.getColorBlocks()) {
 			spawnParticlesAtBlock(colorBlock);
 		}
 	}

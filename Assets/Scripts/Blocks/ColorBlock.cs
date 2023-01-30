@@ -10,7 +10,7 @@ public enum BlockColor {
 
 public class ColorBlock : Block, IFallable, IFillable {
 	[SerializeField] BlockColor color;
-	BlockGroup blockGroup;
+	ColorMatch colorMatch;
 
 	SpriteRenderer spriteRenderer;
 
@@ -25,14 +25,14 @@ public class ColorBlock : Block, IFallable, IFillable {
 	}
 
 	void OnMouseDown() {
-		if (blockGroup?.getColorBlocks().Count >= 5) {
+		if (colorMatch?.getColorBlocks().Count >= 5) {
 			BlockSpawner blockSpawner = LevelManager.getInstance().getBlockSpawner();
 			Rocket rocketPrefab = Prefabs.getInstance().getRocket();
 
 			blockSpawner.spawnBlock(rocketPrefab, transform.position);
 		}
 
-		blockGroup?.blast();
+		colorMatch?.blast();
 	}
 
 	public override void blast() {
@@ -62,7 +62,7 @@ public class ColorBlock : Block, IFallable, IFillable {
 
 	// Getters & Setters
 	public BlockColor getColor() { return color; }
-	public BlockGroup getBlockGroup() { return blockGroup; }
+	public ColorMatch getBlockGroup() { return colorMatch; }
 
-	public void setBlockGroup(BlockGroup blockGroup) { this.blockGroup = blockGroup; }
+	public void setBlockGroup(ColorMatch colorMatch) { this.colorMatch = colorMatch; }
 }

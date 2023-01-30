@@ -31,19 +31,19 @@ public class GoalManager : MonoBehaviour {
 	}
 
 	// Rename this 
-	void checkForGoals(BlockGroup blockGroup) {
+	void checkForGoals(ColorMatch colorMatch) {
 		foreach (Goal goal in goals) {
 			// Gateway for color block goals
 			if (goal.getBlock() is not ColorBlock)
 				continue;
 
 			ColorBlock goalBlock = goal.getBlock() as ColorBlock;
-			bool colorsMatch = blockGroup.getColorBlocks()[0].getColor() == goalBlock.getColor();
+			bool colorsMatch = colorMatch.getColorBlocks()[0].getColor() == goalBlock.getColor();
 			bool goalCompleted = goal.getAmount() <= 0;
 
 			if (colorsMatch && !goalCompleted) {
-				goal.decrementAmount(blockGroup.getColorBlocks().Count);
-				Events.getInstance().goalMatch.Invoke(blockGroup, goal);
+				goal.decrementAmount(colorMatch.getColorBlocks().Count);
+				Events.getInstance().goalMatch.Invoke(colorMatch, goal);
 			}
 		}
 	}

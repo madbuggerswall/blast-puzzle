@@ -20,17 +20,17 @@ public class FillManager : MonoBehaviour {
 		fillColumn(getAffectedColumn(block));
 	}
 
-	void fill(BlockGroup blockGroup) {
+	void fill(ColorMatch colorMatch) {
 		Events.getInstance().filling.Invoke();
-		foreach (int column in getAffectedColumns(blockGroup)) {
+		foreach (int column in getAffectedColumns(colorMatch)) {
 			fillColumn(column);
 		}
 	}
 
-	List<int> getAffectedColumns(BlockGroup blockGroup) {
+	List<int> getAffectedColumns(ColorMatch colorMatch) {
 		List<int> affectedColumns = new List<int>();
 
-		foreach (Block block in blockGroup.getAllBlocks()) {
+		foreach (Block block in colorMatch.getAllBlocks()) {
 			int affectedColumn = getAffectedColumn(block);
 			if (!affectedColumns.Contains(affectedColumn))
 				affectedColumns.Add(affectedColumn);

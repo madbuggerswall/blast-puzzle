@@ -17,8 +17,8 @@ public class GoalEffectUI : MonoBehaviour {
 		Events.getInstance().goalBlock.AddListener(moveBlockTowardsGoalIcon);
 	}
 
-	void moveMatchTowardsGoalIcon(BlockGroup blockGroup, Goal goal) {
-		foreach (ColorBlock colorBlock in blockGroup.getColorBlocks()) {
+	void moveMatchTowardsGoalIcon(ColorMatch colorMatch, Goal goal) {
+		foreach (ColorBlock colorBlock in colorMatch.getColorBlocks()) {
 			moveBlockTowardsGoalIcon(colorBlock, goal);
 		}
 	}

@@ -4,11 +4,11 @@ public class Events {
 	static Events instance;
 
 	// Blast
-	public UnityEvent<BlockGroup> matchBlasted;
+	public UnityEvent<ColorMatch> matchBlasted;
 	public UnityEvent<Block> blockBlasted;
 
 	// Goal
-	public UnityEvent<BlockGroup, Goal> goalMatch;	//Rename this
+	public UnityEvent<ColorMatch, Goal> goalMatch;	//Rename this
 	public UnityEvent<Block, Goal> goalBlock;	//Rename this
 	public UnityEvent<GoalEntryPanelUI> blockHitGoal;
 	public UnityEvent<Goal> goalAccomplished;
@@ -19,11 +19,11 @@ public class Events {
 
 	Events() {
 		// Blast
-		matchBlasted = new UnityEvent<BlockGroup>();
+		matchBlasted = new UnityEvent<ColorMatch>();
 		blockBlasted = new UnityEvent<Block>();
 
 		// Goal
-		goalMatch = new UnityEvent<BlockGroup, Goal>();
+		goalMatch = new UnityEvent<ColorMatch, Goal>();
 		goalBlock = new UnityEvent<Block, Goal>();
 		blockHitGoal = new UnityEvent<GoalEntryPanelUI>();
 		goalAccomplished = new UnityEvent<Goal>();

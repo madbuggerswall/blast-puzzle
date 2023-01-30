@@ -24,14 +24,14 @@ public class MatchFinder : MonoBehaviour {
 			if (colorBlock.getBlockGroup() != null)
 				continue;
 
-			BlockGroup blockGroup = new BlockGroup();
-			checkBlockNeighbors(colorBlock, ref blockGroup);
-			if (blockGroup.getColorBlocks().Count > 0) matchCount++;
+			ColorMatch colorMatch = new ColorMatch();
+			checkBlockNeighbors(colorBlock, ref colorMatch);
+			if (colorMatch.getColorBlocks().Count > 0) matchCount++;
 		}
 	}
 
 	// Check for matching neighbors
-	void checkBlockNeighbors(ColorBlock colorBlock, ref BlockGroup blockGroup) {
+	void checkBlockNeighbors(ColorBlock colorBlock, ref ColorMatch colorMatch) {
 		Vector2[] directions = new Vector2[] { Vector2.up, Vector2.right, Vector2.down, Vector2.left };
 
 		foreach (Vector2 direction in directions) {
@@ -41,16 +41,16 @@ public class MatchFinder : MonoBehaviour {
 			// TODO Refactor this block
 			if (collider?.GetComponent<Block>() is Balloon) {
 				Balloon neighbor = collider?.GetComponent<Balloon>();
-				if (!blockGroup.contains(neighbor))
-					blockGroup.addBlock(neighbor);
+				if (!colorMatch.contains(neighbor))
+					colorMatch.addBlock(neighbor);
 			} else if (collider?.GetComponent<Block>() is ColorBlock) {
 				ColorBlock neighbor = collider?.GetComponent<ColorBlock>();
-				if (colorBlock.getColor() == neighbor?.getColor() && !blockGroup.contains(neighbor)) {
-					if (blockGroup.isEmpty())
-						blockGroup.addBlock(colorBlock);
+				if (colorBlock.getColor() == neighbor?.getColor() && !colorMatch.contains(neighbor)) {
+					if (colorMatch.isEmpty())
+						colorMatch.addBlock(colorBlock);
 
-					blockGroup.addBlock(neighbor);
-					checkBlockNeighbors(neighbor, ref blockGroup);
+					colorMatch.addBlock(neighbor);
+					checkBlockNeighbors(neighbor, ref colorMatch);
 				}
 			}
 		}
