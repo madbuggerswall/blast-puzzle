@@ -5,6 +5,7 @@ using UnityEngine;
 public class RocketHead : MonoBehaviour {
 	int layerMask;
 	Vector3 initialLocalPosition;
+	public bool isVisible;
 
 	public enum Direction { up, right, down, left }
 	[SerializeField] Direction direction;
@@ -15,15 +16,22 @@ public class RocketHead : MonoBehaviour {
 	}
 
 	void OnEnable() {
+		isVisible = true;
 		transform.localPosition = initialLocalPosition;
 	}
 
 	void OnBecameInvisible() {
-		if (gameObject.activeInHierarchy)
-			GetComponentInParent<Rocket>().onRocketHeadLeft(direction);
+		isVisible = false;
+		GetComponentInParent<Rocket>().checkRocketHeads();
+		LevelManager.getInstance().getPowerUpManager().decrementRocketHeadsFired();
 	}
 
-	public IEnumerator moveTowardsTarget() {
+	public void fire() {
+		LevelManager.getInstance().getPowerUpManager().incrementRocketHeadsFired();
+		StartCoroutine(moveTowardsTarget());
+	}
+
+	IEnumerator moveTowardsTarget() {
 		const float maxDelta = 12;
 		const int targetCellDistance = 20;
 
@@ -33,7 +41,8 @@ public class RocketHead : MonoBehaviour {
 
 		while ((Vector2) transform.position != target) {
 			transform.position = Vector3.MoveTowards(transform.position, target, maxDelta * Time.deltaTime);
-			if (currentCell != blockGrid.worldToCell(transform.position)) {
+			Vector2Int nextCell = blockGrid.worldToCell(transform.position);
+			if (currentCell != nextCell && blockGrid.isCellInBound(nextCell)) {
 				currentCell = blockGrid.worldToCell(transform.position);
 				checkCell(currentCell);
 			}
@@ -43,11 +52,13 @@ public class RocketHead : MonoBehaviour {
 
 	void checkCell(Vector2Int cell) {
 		BlockGrid blockGrid = LevelManager.getInstance().getBlockGrid();
+		PowerUpManager powerUpManager = LevelManager.getInstance().getPowerUpManager();
+		
 		Collider2D collider = Physics2D.OverlapPoint(blockGrid.cellToWorld(cell), layerMask);
 		Block block = collider?.GetComponent<Block>();
-
-		if (block is not BottomBlasted && block is not null) {
-			GetComponentInParent<Rocket>().addBlock(block);
+		
+		if (block is not BottomBlasted && block is not null && !powerUpManager.contains(block)) {
+			powerUpManager.addBlock(block);
 			block.blast();
 			Events.getInstance().blockBlasted.Invoke(block);
 		}

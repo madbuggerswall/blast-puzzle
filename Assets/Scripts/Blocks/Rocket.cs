@@ -5,23 +5,15 @@ using UnityEngine;
 public class Rocket : Block, IFillable {
 	[SerializeField] RocketHead rocketFirst;
 	[SerializeField] RocketHead rocketSecond;
-	[SerializeField] List<Block> blocks;
-
-	(bool first, bool second) rocketHeadLeft;
-
-	void OnEnable() {
-		rocketHeadLeft = (false, false);
-		blocks.Clear();
-	}
 
 	void OnMouseDown() {
+		LevelManager.getInstance().getPowerUpManager().addBlock(this);
 		blast();
 	}
 
 	public override void blast() {
-		Events.getInstance().filling.Invoke();
-		StartCoroutine(rocketFirst.moveTowardsTarget());
-		StartCoroutine(rocketSecond.moveTowardsTarget());
+		rocketFirst.fire();
+		rocketSecond.fire();
 	}
 
 	//  Fill empty spaces below
@@ -30,18 +22,8 @@ public class Rocket : Block, IFillable {
 		StartCoroutine(moveTowardsTarget(target));
 	}
 
-	public void onRocketHeadLeft(RocketHead.Direction direction) {
-		if (direction == RocketHead.Direction.up || direction == RocketHead.Direction.left)
-			rocketHeadLeft.first = true;
-		if (direction == RocketHead.Direction.down || direction == RocketHead.Direction.right)
-			rocketHeadLeft.second = true;
-
-		if (rocketHeadLeft.first && rocketHeadLeft.second) {
+	public void checkRocketHeads() {
+		if (!rocketFirst.isVisible && !rocketSecond.isVisible)
 			gameObject.SetActive(false);
-			addBlock(this);
-			Events.getInstance().powerUpBlasted.Invoke(blocks);
-		}
 	}
-
-	public void addBlock(Block block) { blocks.Add(block); }
 }

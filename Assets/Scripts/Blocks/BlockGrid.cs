@@ -21,16 +21,10 @@ public class BlockGrid : MonoBehaviour {
 		adjustPosition();
 	}
 
-	void Start() {
-	}
-
-	// TODO: Doesn't work with odd numbers
 	void setGridSize() {
 		spriteRenderer.size = size + margin;
 	}
 
-
-	// TODO Camera center on grid
 	void adjustPosition() {
 		Vector3 offset = new Vector3();
 		if (size.x % 2 != 0)
@@ -45,6 +39,12 @@ public class BlockGrid : MonoBehaviour {
 	// Grid 
 	public Vector2Int worldToCell(Vector2 position) { return (Vector2Int) grid.WorldToCell(position); }
 	public Vector2 cellToWorld(Vector2Int cellIndex) { return grid.GetCellCenterLocal((Vector3Int) cellIndex); }
+	public bool isCellInBound(Vector2Int cell) {
+		(Vector2Int min, Vector2Int max) bounds = getCellBounds();
+		bool horizontal = cell.x >= bounds.min.x && cell.x < bounds.max.x;
+		bool vertical = cell.y >= bounds.min.y && cell.y < bounds.max.y;
+		return horizontal && vertical;
+	}
 
 	// Getters
 	public Vector2Int getSize() { return size; }

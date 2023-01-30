@@ -10,6 +10,7 @@ public class LevelManager : MonoBehaviour {
 	BlockSpawner blockSpawner;
 	FillManager fillManager;
 	GoalManager goalManager;
+	PowerUpManager powerUpManager;
 
 	void Awake() {
 		// GameManager
@@ -22,6 +23,7 @@ public class LevelManager : MonoBehaviour {
 		blockSpawner = FindObjectOfType<BlockSpawner>();
 		fillManager = FindObjectOfType<FillManager>();
 		goalManager = FindObjectOfType<GoalManager>();
+		powerUpManager = FindObjectOfType<PowerUpManager>();
 	}
 
 	// Singleton
@@ -33,4 +35,5 @@ public class LevelManager : MonoBehaviour {
 	public BlockSpawner getBlockSpawner() { return blockSpawner; }
 	public FillManager getFillManager() { return fillManager; }
 	public GoalManager getGoalManager() { return goalManager; }
+	public PowerUpManager getPowerUpManager() { return powerUpManager; }
 }
