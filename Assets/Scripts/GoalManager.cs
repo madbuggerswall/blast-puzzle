@@ -27,6 +27,7 @@ public class GoalManager : MonoBehaviour {
 
 	void Start() {
 		Events.getInstance().matchBlasted.AddListener(checkForGoals);
+		Events.getInstance().matchBlasted.AddListener(delegate { movesLeft--; });
 		Events.getInstance().blockBlasted.AddListener(checkForGoals);
 	}
 
@@ -62,4 +63,5 @@ public class GoalManager : MonoBehaviour {
 	}
 
 	public List<Goal> getGoals() { return goals; }
+	public int getMovesLeft() { return movesLeft; }
 }

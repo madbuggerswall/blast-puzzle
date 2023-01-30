@@ -6230,7 +6230,7 @@ MonoBehaviour:
     block: {fileID: 1161172928}
   - amount: 12
     block: {fileID: 1927980071}
-  movesLeft: -1
+  movesLeft: 36
 --- !u!4 &699235886
 Transform:
   m_ObjectHideFlags: 0
@@ -13700,6 +13700,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   goalEntryPanelPrefab: {fileID: 1366630778}
   goalPanel: {fileID: 1485850188}
+  movesLeft: {fileID: 548015583}
 --- !u!1 &2126860323
 GameObject:
   m_ObjectHideFlags: 0

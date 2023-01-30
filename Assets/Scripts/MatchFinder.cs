@@ -43,18 +43,22 @@ public class MatchFinder : MonoBehaviour {
 				if (!colorMatch.contains((BlastAffected) neighbor))
 					colorMatch.addBlock((BlastAffected) neighbor);
 			} else if (neighbor is ColorBlock) {
-				bool colorsMatch = colorBlock.getColor() == ((ColorBlock) neighbor).getColor();
-				bool alreadyInMatch = colorMatch.contains((ColorBlock) neighbor);
+				if (!checkMatch(colorBlock, (ColorBlock) neighbor, colorMatch))
+					continue;
 				
-				if (colorsMatch && !alreadyInMatch) {
-					if (colorMatch.isEmpty())
-						colorMatch.addBlock(colorBlock);
+				if (colorMatch.isEmpty())
+					colorMatch.addBlock(colorBlock);
 
-					colorMatch.addBlock((ColorBlock) neighbor);
-					checkBlockNeighbors((ColorBlock) neighbor, ref colorMatch);
-				}
+				colorMatch.addBlock((ColorBlock) neighbor);
+				checkBlockNeighbors((ColorBlock) neighbor, ref colorMatch);
 			}
 		}
+	}
+
+	bool checkMatch(ColorBlock block, ColorBlock neighbor, ColorMatch colorMatch) {
+		bool colorsMatch = block.getColor() == neighbor.getColor();
+		bool alreadyInMatch = colorMatch.contains(neighbor);
+		return colorsMatch && !alreadyInMatch;
 	}
 
 	void clearBlockGroups() {

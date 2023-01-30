@@ -6,9 +6,13 @@ using UnityEngine.UI;
 public class GoalPanelUI : MonoBehaviour {
 	[SerializeField] GoalEntryPanelUI goalEntryPanelPrefab;
 	[SerializeField] GameObject goalPanel;
+	[SerializeField] TMPro.TextMeshProUGUI movesLeft;
 
 	void Start() {
 		initializeGoalEntryPanels();
+		updateMovesLeft();
+		
+		Events.getInstance().matchBlasted.AddListener(delegate { updateMovesLeft(); });
 	}
 
 	void initializeGoalEntryPanels() {
@@ -18,5 +22,9 @@ public class GoalPanelUI : MonoBehaviour {
 			GoalEntryPanelUI goalEntryPanel = Instantiate(goalEntryPanelPrefab, goalPanel.transform);
 			goalEntryPanel.initialize(goal);
 		}
+	}
+
+	void updateMovesLeft() {
+		movesLeft.text = LevelManager.getInstance().getGoalManager().getMovesLeft().ToString();
 	}
 }
