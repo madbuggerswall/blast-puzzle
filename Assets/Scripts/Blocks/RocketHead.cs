@@ -13,13 +13,14 @@ public class RocketHead : MonoBehaviour {
 		initialLocalPosition = transform.localPosition;
 		layerMask = LayerMask.GetMask("Block");
 	}
-	
+
 	void OnEnable() {
 		transform.localPosition = initialLocalPosition;
 	}
 
 	void OnBecameInvisible() {
-		GetComponentInParent<Rocket>().onRocketHeadLeft(direction);
+		if (gameObject.activeInHierarchy)
+			GetComponentInParent<Rocket>().onRocketHeadLeft(direction);
 	}
 
 	public IEnumerator moveTowardsTarget() {

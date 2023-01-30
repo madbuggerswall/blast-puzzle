@@ -53,8 +53,6 @@ public class FillManager : MonoBehaviour {
 		return affectedColumns;
 	}
 
-
-
 	int getAffectedColumn(Block block) {
 		return LevelManager.getInstance().getBlockGrid().worldToCell(block.transform.position).x;
 	}
@@ -93,7 +91,7 @@ public class FillManager : MonoBehaviour {
 		BlockSpawner blockSpawner = LevelManager.getInstance().getBlockSpawner();
 
 		for (int targetRow = emptyCellCount; targetRow > 0; targetRow--) {
-			Vector2 spawnPosition = blockGrid.cellToWorld(new Vector2Int(column, fallingRow - targetRow));
+			Vector2 spawnPosition = blockGrid.cellToWorld(new Vector2Int(column, fallingRow + emptyCellCount - targetRow));
 			IFallable fallableBlock = blockSpawner.spawnRandomFallable(spawnPosition);
 			fallableBlock.fall(targetRow);
 			shiftingBlocks++;

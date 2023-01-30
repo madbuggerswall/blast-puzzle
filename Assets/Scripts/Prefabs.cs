@@ -18,7 +18,8 @@ public class Prefabs : MonoBehaviour {
 	[SerializeField] Block balloon;
 
 	[Header("Power-up Blocks")]
-	[SerializeField] Rocket rocket;
+	[SerializeField] Rocket rocketHorizontal;
+	[SerializeField] Rocket rocketVertical;
 
 
 	void Awake() {
@@ -49,7 +50,7 @@ public class Prefabs : MonoBehaviour {
 	public Block getDuck() { return duck; }
 	public Block getBalloon() { return balloon; }
 
-	public Rocket getRocket() { return rocket; }
+	public Rocket getRandomRocket() { return Random.value < 0.5f ? rocketHorizontal : rocketVertical; }
 
 	// Singleton
 	public static Prefabs getInstance() { return instance; }

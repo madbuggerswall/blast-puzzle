@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Rocket : Block, IFillable {
-	[SerializeField] RocketHead rocketLeft;
-	[SerializeField] RocketHead rocketRight;
+	[SerializeField] RocketHead rocketFirst;
+	[SerializeField] RocketHead rocketSecond;
 	[SerializeField] List<Block> blocks;
 
 	(bool first, bool second) rocketHeadLeft;
@@ -19,13 +19,10 @@ public class Rocket : Block, IFillable {
 	}
 
 	public override void blast() {
-		StartCoroutine(rocketLeft.moveTowardsTarget());
-		StartCoroutine(rocketRight.moveTowardsTarget());
+		Events.getInstance().filling.Invoke();
+		StartCoroutine(rocketFirst.moveTowardsTarget());
+		StartCoroutine(rocketSecond.moveTowardsTarget());
 	}
-
-	// IEnumerator fireRockets() {
-
-	// }
 
 	//  Fill empty spaces below
 	void IFillable.fill(int rowCount) {

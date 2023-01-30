@@ -19,13 +19,7 @@ public class ColorBlock : Block, IFillable, IFallable {
 	}
 
 	void OnMouseDown() {
-		if (colorMatch?.getColorBlocks().Count >= 5) {
-			BlockSpawner blockSpawner = LevelManager.getInstance().getBlockSpawner();
-			Rocket rocketPrefab = Prefabs.getInstance().getRocket();
-
-			blockSpawner.spawnBlock(rocketPrefab, transform.position);
-		}
-
+		checkForPowerUps();
 		colorMatch?.blast();
 	}
 
@@ -52,6 +46,15 @@ public class ColorBlock : Block, IFillable, IFallable {
 		BlockGrid blockGrid = LevelManager.getInstance().getBlockGrid();
 		int sortingOrder = blockGrid.getSize().y / 2 + blockGrid.worldToCell(blockPosition).y;
 		spriteRenderer.sortingOrder = sortingOrder;
+	}
+
+	void checkForPowerUps() {
+		if (colorMatch?.getColorBlocks().Count >= 5) {
+			BlockSpawner blockSpawner = LevelManager.getInstance().getBlockSpawner();
+			Rocket rocketPrefab = Prefabs.getInstance().getRandomRocket();
+
+			blockSpawner.spawnBlock(rocketPrefab, transform.position);
+		}
 	}
 
 	// Getters & Setters
