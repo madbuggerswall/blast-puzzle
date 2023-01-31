@@ -38,7 +38,7 @@ public abstract class Block : MonoBehaviour {
 		return blockGrid.cellToWorld(targetCell);
 	}
 
-	// Moves the rigidbody towards a target. Notifies FillManager when it reaches target
+	// Moves the rigidbody towards a target. Notifies FillManager when it reaches target.
 	protected IEnumerator moveTowardsTarget(Vector2 target) {
 		const float maxDelta = 12;
 
