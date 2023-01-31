@@ -50,7 +50,7 @@ public class ColorBlock : Block, IFillable, IFallable {
 
 	// If block match size is above threshold spawn a random rocket.
 	void checkForPowerUps(int powerUpThreshold) {
-		if (colorMatch?.getColorBlocks().Count < powerUpThreshold) {
+		if (colorMatch?.getColorBlocks().Count >= powerUpThreshold) {
 			BlockSpawner blockSpawner = LevelManager.getInstance().getBlockSpawner();
 			Rocket rocketPrefab = Prefabs.getInstance().getRandomRocket();
 			blockSpawner.spawnBlock(rocketPrefab, transform.position);
