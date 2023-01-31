@@ -22,15 +22,18 @@ public class BlockGrid : MonoBehaviour {
 		adjustPosition();
 	}
 
+	// Clamps the size between minimum and maximum size values.
 	void clampSize() {
 		size.x = Mathf.Clamp(size.x, minSize.x, maxSize.x);
 		size.y = Mathf.Clamp(size.y, minSize.y, maxSize.y);
 	}
 
+	// Sets grid size accounting for the border margins
 	void setGridSize() {
 		spriteRenderer.size = size + margin;
 	}
 
+	// If grid size contains odd numbers, shift the grid and camera to align with UnityEngine.Grid
 	void adjustPosition() {
 		Vector3 offset = new Vector3();
 		if (size.x % 2 != 0)
@@ -42,7 +45,7 @@ public class BlockGrid : MonoBehaviour {
 		Camera.main.transform.position = new Vector3(offset.x, offset.y, Camera.main.transform.position.z);
 	}
 
-	// Grid 
+	// Grid Utilities
 	public Vector2Int worldToCell(Vector2 position) { return (Vector2Int) grid.WorldToCell(position); }
 	public Vector2 cellToWorld(Vector2Int cellIndex) { return grid.GetCellCenterLocal((Vector3Int) cellIndex); }
 	public bool isCellInBound(Vector2Int cell) {

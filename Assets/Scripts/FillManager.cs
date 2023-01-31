@@ -40,10 +40,13 @@ public class FillManager : MonoBehaviour {
 		}
 	}
 
+	// Get affected columns for a color match including blasted affected blocks.
 	List<int> getAffectedColumns(ColorMatch colorMatch) {
 		return getAffectedColumns(colorMatch.getAllBlocks());
 	}
 
+
+	// Get affected columns for a list of blocks.
 	List<int> getAffectedColumns(List<Block> blocks) {
 		List<int> affectedColumns = new List<int>();
 
@@ -56,10 +59,12 @@ public class FillManager : MonoBehaviour {
 		return affectedColumns;
 	}
 
+	// Get affected column for a single block.
 	int getAffectedColumn(Block block) {
 		return LevelManager.getInstance().getBlockGrid().worldToCell(block.transform.position).x;
 	}
 
+	// Fill a column's empty spaces by shifting and dropping blocks.
 	void fillColumn(int column) {
 		int emptyCellCount;
 
@@ -67,7 +72,7 @@ public class FillManager : MonoBehaviour {
 		dropBlocks(column, emptyCellCount);
 	}
 
-	// Shifts blocks to fill blasted cells
+	// Shifts blocks to fill blasted cells by counting how many empty cells there are in the column
 	void fillEmptyCells(int column, out int emptyCellCount) {
 		BlockGrid blockGrid = LevelManager.getInstance().getBlockGrid();
 
@@ -101,6 +106,7 @@ public class FillManager : MonoBehaviour {
 		}
 	}
 
+	//  If there aren't any shifting blocks left, filling is done.
 	public void decrementShiftingBlocks() {
 		shiftingBlocks--;
 		if (shiftingBlocks == 0) {

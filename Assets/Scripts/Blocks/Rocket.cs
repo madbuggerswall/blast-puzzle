@@ -11,6 +11,7 @@ public class Rocket : Block, IFillable {
 		blast();
 	}
 
+	// Fires the rocket heads when blasted
 	public override void blast() {
 		rocketFirst.fire();
 		rocketSecond.fire();
@@ -22,6 +23,7 @@ public class Rocket : Block, IFillable {
 		StartCoroutine(moveTowardsTarget(target));
 	}
 
+	// If fired rocket heads are out of screen, rocket is disabled
 	public void checkRocketHeads() {
 		if (!rocketFirst.isVisible && !rocketSecond.isVisible)
 			gameObject.SetActive(false);

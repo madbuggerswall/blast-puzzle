@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class PowerUpManager : MonoBehaviour {
+	public const int powerUpThreshold = 5;
+
 	[SerializeField] List<Block> blocks;
 	[SerializeField] int rocketHeadsFired;
 

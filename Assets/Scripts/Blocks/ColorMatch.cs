@@ -9,13 +9,12 @@ public class ColorMatch {
 		blastAffectedBlocks = new List<BlastAffected>();
 	}
 
+	// Blast the color matched blocks and neighbor triggered blocks.
 	public void blast() {
-		// Blast the color matched blocks
 		foreach (ColorBlock block in colorBlocks) {
 			block.blast();
 		}
 
-		// Blast the neighbor triggered blocks (balloons etc.)
 		foreach (Block block in blastAffectedBlocks) {
 			block.blast();
 			Events.getInstance().blockBlasted.Invoke(block);
@@ -24,18 +23,17 @@ public class ColorMatch {
 		Events.getInstance().matchBlasted.Invoke(this);
 	}
 
+
+	// ColorMatch Utilities
+	public bool isEmpty() { return colorBlocks.Count == 0; }
+	public bool contains(ColorBlock block) { return colorBlocks.Contains(block); }
+	public bool contains(BlastAffected block) { return blastAffectedBlocks.Contains(block); }
+	public void addBlock(BlastAffected block) { blastAffectedBlocks.Add(block); }
 	public void addBlock(ColorBlock block) {
 		colorBlocks.Add(block);
 		block.setBlockGroup(this);
 	}
 
-	public void addBlock(BlastAffected block) {
-		blastAffectedBlocks.Add(block);
-	}
-
-	public bool isEmpty() { return colorBlocks.Count == 0; }
-	public bool contains(ColorBlock block) { return colorBlocks.Contains(block); }
-	public bool contains(BlastAffected block) { return blastAffectedBlocks.Contains(block); }
 
 	// Getters
 	public List<ColorBlock> getColorBlocks() { return colorBlocks; }

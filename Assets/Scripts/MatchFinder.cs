@@ -11,13 +11,13 @@ public class MatchFinder : MonoBehaviour {
 	}
 
 	void Start() {
-		checkBlockGroups();
-		Events.getInstance().fillingDone.AddListener(checkBlockGroups);
-		Events.getInstance().filling.AddListener(clearBlockGroups);
+		findColorMatches();
+		Events.getInstance().fillingDone.AddListener(findColorMatches);
+		Events.getInstance().filling.AddListener(clearColorMatches);
 	}
 
-	// Check for matching blocks/matching groups
-	void checkBlockGroups() {
+	// Find if there's a match for each ColorBlock
+	void findColorMatches() {
 		ColorBlock[] colorBlocks = LevelManager.getInstance().getBlockSpawner().getColorBlocks();
 
 		foreach (ColorBlock colorBlock in colorBlocks) {
@@ -30,12 +30,11 @@ public class MatchFinder : MonoBehaviour {
 		}
 	}
 
-	// Check for matching neighbors
+	// Check for color matching neighbors recursively
 	void checkBlockNeighbors(ColorBlock colorBlock, ref ColorMatch colorMatch) {
 		Vector2[] directions = new Vector2[] { Vector2.up, Vector2.right, Vector2.down, Vector2.left };
 
 		foreach (Vector2 direction in directions) {
-			// Multiply direction with grid size for correctness.
 			Collider2D collider = Physics2D.OverlapPoint((Vector2) colorBlock.transform.position + direction, layerMask);
 			Block neighbor = collider?.GetComponent<Block>();
 
@@ -45,7 +44,7 @@ public class MatchFinder : MonoBehaviour {
 			} else if (neighbor is ColorBlock) {
 				if (!checkMatch(colorBlock, (ColorBlock) neighbor, colorMatch))
 					continue;
-				
+
 				if (colorMatch.isEmpty())
 					colorMatch.addBlock(colorBlock);
 
@@ -55,13 +54,15 @@ public class MatchFinder : MonoBehaviour {
 		}
 	}
 
+	// Check if colors match and neighbor isn't already in match
 	bool checkMatch(ColorBlock block, ColorBlock neighbor, ColorMatch colorMatch) {
 		bool colorsMatch = block.getColor() == neighbor.getColor();
 		bool alreadyInMatch = colorMatch.contains(neighbor);
 		return colorsMatch && !alreadyInMatch;
 	}
 
-	void clearBlockGroups() {
+	// Clear all matches after each blast
+	void clearColorMatches() {
 		matchCount = 0;
 
 		ColorBlock[] colorBlocks = LevelManager.getInstance().getBlockSpawner().getColorBlocks();

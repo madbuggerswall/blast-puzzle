@@ -8,6 +8,7 @@ public class Goal {
 	[SerializeField] int amount;
 	[SerializeField] Block block;
 
+	// Decrement remaining goal amount. Notify Events if goal is acheived
 	public void decrementAmount(int count) {
 		amount = Mathf.Clamp(amount - count, 0, int.MaxValue);
 		if (amount == 0)
@@ -29,16 +30,19 @@ public class GoalManager : MonoBehaviour {
 		Events.getInstance().blockBlasted.AddListener(checkGoals);
 	}
 
+	// Check if ColorMatch counts for any goal
 	void checkGoals(ColorMatch colorMatch) {
 		foreach (Goal goal in goals) {
 			// Gateway for color block goals
 			if (goal.getBlock() is not ColorBlock)
 				continue;
 
+			// Check if colors are matched and goal isn't completed yet
 			ColorBlock goalBlock = goal.getBlock() as ColorBlock;
 			bool colorsMatch = colorMatch.getColorBlocks()[0].getColor() == goalBlock.getColor();
 			bool goalCompleted = goal.getAmount() <= 0;
 
+			// If ColorMatch is counted for a Goal notify Events (for effects mostlyF)
 			if (colorsMatch && !goalCompleted) {
 				goal.decrementAmount(colorMatch.getColorBlocks().Count);
 				Events.getInstance().matchInGoals.Invoke(colorMatch, goal);
@@ -46,6 +50,7 @@ public class GoalManager : MonoBehaviour {
 		}
 	}
 
+	// Check if block counts for any goal
 	void checkGoals(Block block) {
 		foreach (Goal goal in goals) {
 			if (goal.getBlock().GetType() != block.GetType())
@@ -63,12 +68,14 @@ public class GoalManager : MonoBehaviour {
 		}
 	}
 
+	// If there are no moves left notify Events. Nothing will happen but it's there.
 	void decrementMovesLeft() {
 		movesLeft--;
 		if (movesLeft == 0)
 			Events.getInstance().noMovesLeft.Invoke();
 	}
 
+	// Getters
 	public List<Goal> getGoals() { return goals; }
 	public int getMovesLeft() { return movesLeft; }
 }

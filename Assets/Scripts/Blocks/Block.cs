@@ -23,20 +23,22 @@ public abstract class Block : MonoBehaviour {
 
 	public abstract void blast();
 
-	protected Vector2 getFillingTarget(int rowCount) {
+	// Returns a target position for shifting cells given empty cell count
+	protected Vector2 getFillingTarget(int emptyCellCount) {
 		BlockGrid blockGrid = LevelManager.getInstance().getBlockGrid();
-		Vector2Int targetCell = blockGrid.worldToCell(transform.position + Vector3.down * rowCount);
+		Vector2Int targetCell = blockGrid.worldToCell(transform.position + Vector3.down * emptyCellCount);
 		return blockGrid.cellToWorld(targetCell);
 	}
 
-	protected Vector2 getFallingTarget(int rowCount) {
+	// Returns a target position for falling cells given empty cell count
+	protected Vector2 getFallingTarget(int emptyCellCount) {
 		BlockGrid blockGrid = LevelManager.getInstance().getBlockGrid();
 		int maxRow = blockGrid.getCellBounds().max.y;
-		Vector2Int targetCell = blockGrid.worldToCell(new Vector2(transform.position.x, maxRow - rowCount));
+		Vector2Int targetCell = blockGrid.worldToCell(new Vector2(transform.position.x, maxRow - emptyCellCount));
 		return blockGrid.cellToWorld(targetCell);
 	}
 
-
+	// Moves the rigidbody towards a target. Notifies FillManager when it reaches target
 	protected IEnumerator moveTowardsTarget(Vector2 target) {
 		const float maxDelta = 12;
 

@@ -17,12 +17,15 @@ public class GoalEffectUI : MonoBehaviour {
 		Events.getInstance().blockInGoals.AddListener(moveBlockTowardsGoalIcon);
 	}
 
+	// Move every colored block in a color match towards the corresponding goal icon in the UI.
 	void moveMatchTowardsGoalIcon(ColorMatch colorMatch, Goal goal) {
 		foreach (ColorBlock colorBlock in colorMatch.getColorBlocks()) {
 			moveBlockTowardsGoalIcon(colorBlock, goal);
 		}
 	}
 
+
+	// Move a colored block in towards the corresponding goal icon in the UI.
 	void moveBlockTowardsGoalIcon(Block block, Goal goal) {
 		GameObject blockSprite = objectPool.spawn(spritePrefab, block.transform.position);
 		Sprite goalIcon = block.GetComponent<SpriteRenderer>().sprite;
@@ -31,6 +34,7 @@ public class GoalEffectUI : MonoBehaviour {
 		StartCoroutine(moveSpriteTowards(blockSprite, goal));
 	}
 
+	// Move transform towards corresponding goal panel. Update the panel and notify Events when it reaches target.
 	IEnumerator moveSpriteTowards(GameObject sprite, Goal goal) {
 		const float maxDelta = 12;
 		GoalEntryPanelUI goalPanel = getPanel(goal);
@@ -46,6 +50,7 @@ public class GoalEffectUI : MonoBehaviour {
 		Events.getInstance().blockHitGoal.Invoke(goalPanel);
 	}
 
+	// Get the goal panel for corresponding goal
 	GoalEntryPanelUI getPanel(Goal goal) {
 		GoalEntryPanelUI[] panels = transform.parent.GetComponentsInChildren<GoalEntryPanelUI>();
 		foreach (GoalEntryPanelUI panel in panels)

@@ -25,29 +25,34 @@ public class Particles : MonoBehaviour {
 		Events.getInstance().blockBlasted.AddListener(blastParticles);
 	}
 
+	// Spawn particles for each ColorBlock in a color match
 	void blastParticles(ColorMatch colorMatch) {
 		foreach (ColorBlock colorBlock in colorMatch.getColorBlocks()) {
 			spawnParticlesAtBlock(colorBlock);
 		}
 	}
 
+	// Spawn particles for block
 	void blastParticles(Block block) {
 		if (block is ColorBlock)
 			spawnParticlesAtBlock((ColorBlock) block);
 	}
 
+	// Spawn particles for goal progress
 	void blastParticles(GoalEntryPanelUI goalPanel) {
 		GameObject spawnedParticles = objectPool.spawn(goalParticlePrefab, goalPanel.transform.position);
 		ParticleSystem.MainModule mainModule = spawnedParticles.GetComponent<ParticleSystem>().main;
 		mainModule.startColor = Color.white;
 	}
 
+	// Spawn particles for block
 	void spawnParticlesAtBlock(ColorBlock colorBlock) {
 		GameObject spawnedParticles = objectPool.spawn(blockParticlePrefab, colorBlock.transform.position);
 		ParticleSystem.MainModule mainModule = spawnedParticles.GetComponent<ParticleSystem>().main;
 		mainModule.startColor = getColor(colorBlock);
 	}
 
+	// Enum to Color
 	Color getColor(ColorBlock colorBlock) {
 		switch (colorBlock.getColor()) {
 			case BlockColor.blue:

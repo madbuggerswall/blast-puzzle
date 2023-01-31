@@ -14,11 +14,13 @@ public class SoundManager : MonoBehaviour {
 		Events.getInstance().blockBlasted.AddListener(playBlockSound);
 	}
 
+	// Randomize pitch slightly in every play
 	void playAudioSource(AudioSource audioSource) {
 		audioSource.pitch = Random.Range(0.96f, 1.04f);
 		audioSource.Play();
 	}
 
+	// Play the corresponding sound for each block
 	void playBlockSound(Block block) {
 		if (block is Duck)
 			playAudioSource(duck);

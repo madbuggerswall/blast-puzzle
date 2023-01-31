@@ -4,12 +4,14 @@ using UnityEngine;
 
 // For other blocks that blast at bottom. Rename this class.
 public abstract class BottomBlasted : Block {
+	// Blast the block at the bottom of the grid
 	protected void blastAtBottom() {
 		if (isAtTheBottom() && gameObject.activeInHierarchy) {
 			blast();
 		}
 	}
 
+	// Check if block is at the bottom of the grid
 	bool isAtTheBottom() {
 		BlockGrid blockGrid = LevelManager.getInstance().getBlockGrid();
 		Vector2Int minCell = blockGrid.getCellBounds().min;

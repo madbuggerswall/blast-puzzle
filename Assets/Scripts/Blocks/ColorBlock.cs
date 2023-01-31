@@ -19,7 +19,7 @@ public class ColorBlock : Block, IFillable, IFallable {
 	}
 
 	void OnMouseDown() {
-		checkForPowerUps();
+		checkForPowerUps(PowerUpManager.powerUpThreshold);
 		colorMatch?.blast();
 	}
 
@@ -48,11 +48,11 @@ public class ColorBlock : Block, IFillable, IFallable {
 		spriteRenderer.sortingOrder = sortingOrder;
 	}
 
-	void checkForPowerUps() {
-		if (colorMatch?.getColorBlocks().Count >= 5) {
+	// If block match size is above threshold spawn a random rocket.
+	void checkForPowerUps(int powerUpThreshold) {
+		if (colorMatch?.getColorBlocks().Count < powerUpThreshold) {
 			BlockSpawner blockSpawner = LevelManager.getInstance().getBlockSpawner();
 			Rocket rocketPrefab = Prefabs.getInstance().getRandomRocket();
-
 			blockSpawner.spawnBlock(rocketPrefab, transform.position);
 		}
 	}

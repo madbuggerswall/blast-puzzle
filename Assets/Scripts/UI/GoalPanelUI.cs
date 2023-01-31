@@ -15,6 +15,7 @@ public class GoalPanelUI : MonoBehaviour {
 		Events.getInstance().matchBlasted.AddListener(delegate { updateMovesLeft(); });
 	}
 
+	// Initialize all goal panels
 	void initializeGoalEntryPanels() {
 		GoalManager goalManager = LevelManager.getInstance().getGoalManager();
 
@@ -23,7 +24,8 @@ public class GoalPanelUI : MonoBehaviour {
 			goalEntryPanel.initialize(goal);
 		}
 	}
-
+	
+	// Update moves left panel
 	void updateMovesLeft() {
 		movesLeft.text = LevelManager.getInstance().getGoalManager().getMovesLeft().ToString();
 	}

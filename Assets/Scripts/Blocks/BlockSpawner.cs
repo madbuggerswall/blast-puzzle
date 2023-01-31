@@ -22,17 +22,20 @@ public class BlockSpawner : MonoBehaviour {
 		return spawnBlock(getRandomBlockPrefab(), position);
 	}
 
+	// Spawn a random fallable at position
 	public IFallable spawnRandomFallable(Vector3 position) {
 		return (IFallable) spawnBlock(getRandomBlockPrefab(), position);
 	}
 
+
+	// Spawn a block  at position
 	public Block spawnBlock(Block block, Vector3 position) {
 		Block spawnedBlock = objectPool.spawn(block.gameObject, position).GetComponent<Block>();
 		spawnedBlock.gameObject.SetActive(true);
 		return spawnedBlock;
 	}
 
-	// Fills BlockGrid with random colored blocks
+	// Fills BlockGrid with random blocks (ColorBlock, Balloon and Duck)
 	void initializeGrid() {
 		BlockGrid blockGrid = LevelManager.getInstance().getBlockGrid();
 		(Vector2Int firstCell, Vector2Int lastCell) = blockGrid.getCellBounds();
